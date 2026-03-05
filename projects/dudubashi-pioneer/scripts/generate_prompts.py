@@ -63,7 +63,7 @@ def generate_prompt_v1(persona, hotspots, insights):
 - 画幅：{persona['video_format']['aspect_ratio']}
 - 色调：暖色调
 - 节奏：快切，每3秒一切换
-- 禁止项：禁止出现其他巴士logo、水印
+- 禁止项：禁止出现其他巴士logo、水印，车身必须有"嘟嘟巴士"大字
 
 ## BGM建议
 欢快电子卡点音乐，0:08-秒开始高潮
@@ -220,8 +220,10 @@ def validate_seedance_format(prompt_text):
         issues.append("❌ 缺少Hook")
     if "【反转" not in prompt_text and "【收尾" not in prompt_text:
         issues.append("❌ 缺少反转/收尾")
-    if "禁止" not in prompt_text:
-        issues.append("⚠️ 建议添加禁止项")
+    if "禁止" not in prompt_text and "禁止项" not in prompt_text:
+        issues.append("❌ 缺少禁止项")
+    if "嘟嘟巴士" not in prompt_text and "大字" not in prompt_text:
+        issues.append("❌ 缺少品牌展示：车身大字")
     if "BGM" not in prompt_text and "音乐" not in prompt_text:
         issues.append("⚠️ 建议添加BGM")
     if "9:16" not in prompt_text and "竖屏" not in prompt_text:

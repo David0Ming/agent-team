@@ -27,6 +27,18 @@ At the start of each main session:
 
 Don't ask permission. Just do it.
 
+### 任务执行规则 (2026-03-05 新增)
+
+**泽钢要求**：
+- 收到任务后，先说打算怎么做
+- 等泽钢确认后再执行
+- 不能直接执行
+
+**禁止**：
+- 说"记住了"而不行动
+- 自作主张执行任务
+- 敷衍回答
+
 ### Token Management Rule
 
 Monitor token usage at the start of each main session:
