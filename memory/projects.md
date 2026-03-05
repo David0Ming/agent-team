@@ -51,5 +51,11 @@
 
 ## 想法/待办
 
-- [ ] 考虑安装 mem0 插件（高级记忆系统）
-- [ ] 配置 git 同步
+- [x] 检查学习策略：确保学到的知识和技能都记录了"何时使用"
+  - [x] 更新现有学习记录（github-trending-learning.md, skills-sh-learning.md）
+  - [x] 更新 HEARTBEAT.md 的学习流程 ← 刚完成
+- [x] 连接到 David0Ming 的 GitHub 账号
+- [x] 批判性学习两个微信文章
+  - [x] 文章1：微信文章自动总结+同步飞书 (Victor)
+  - [x] 文章2：傅盛的龙虾实践课 (郎瀚威 Will)
+- [x] 批判性学习 aivi.fyi 所有内容

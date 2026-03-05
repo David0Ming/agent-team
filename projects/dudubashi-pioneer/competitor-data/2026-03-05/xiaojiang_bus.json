@@ -1,0 +1,29 @@
+{
+  "brand": "小江巴士",
+  "date": "2026-03-05",
+  "platforms": {
+    "抖音": {
+      "status": "API_LIMIT",
+      "data": null,
+      "note": "需要新榜API key（已配置）"
+    },
+    "视频号": {
+      "status": "FAILED",
+      "error": "需要登录验证",
+      "fallback": "使用缓存或空数据"
+    },
+    "小红书": {
+      "status": "FAILED",
+      "error": "需要登录验证",
+      "fallback": "使用缓存或空数据"
+    }
+  },
+  "yesterday_posts": 0,
+  "yesterday_likes": 0,
+  "total_likes": 0,
+  "content_types": {
+    "图文": 0,
+    "视频": 0
+  },
+  "data_quality": "API_LIMIT"
+}

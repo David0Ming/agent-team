@@ -1,0 +1,12 @@
+{
+  "lastCheck": "2026-03-05T17:53:00Z",
+  "gateway": {
+    "running": true,
+    "agents": 11,
+    "version": "2026.3.2"
+  },
+  "today": {
+    "dudubashi": "already_run_14:01",
+    "status": "all_done"
+  }
+}

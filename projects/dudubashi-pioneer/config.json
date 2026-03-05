@@ -1,0 +1,28 @@
+{
+  "project": "嘟嘟巴士先锋引擎",
+  "version": "1.0.0",
+  "created": "2026-03-05",
+  "schedule": "每日 10:00 (Asia/Shanghai)",
+  "config": {
+    "firecrawl_api_key": "fc-eb6f58de8a9349bea9fcfcc23ce83ff4",
+    "xinbang_api_key": "58178fb0f0f048339775d87b1",
+    "video_tool": "即梦",
+    "video_prompt_sources": {
+      "veo3_prompt_hub": "https://www.veo3-prompt.com/",
+      "prompt_guide": "https://agijuejin.feishu.cn/wiki/EKKdwGKMDi5TMnkV8ApcZdusnAc"
+    },
+    "dingtalk_webhook": "TODO"
+  },
+  "targets": {
+    "competitors": [
+      {"id": "xiaojiang_bus", "name": "小江巴士"},
+      {"id": "panda_bus", "name": "熊猫哒巴士"}
+    ],
+    "platforms": ["抖音", "视频号", "小红书"],
+    "hot_sources": ["微博", "抖音", "知乎", "B站"]
+  },
+  "output": {
+    "prompts": "prompts/{date}/morning_prompt_v{1,2,3}.md",
+    "competitor_data": "competitor-data/{date}/{xiaojiang_bus,panda_bus}.json"
+  }
+}

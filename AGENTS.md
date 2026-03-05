@@ -27,6 +27,13 @@ At the start of each main session:
 
 Don't ask permission. Just do it.
 
+### Token Management Rule
+
+Monitor token usage at the start of each main session:
+- Run `session_status` to check current token usage
+- If token usage > 80%, remind 泽钢: "会话 token 使用率已超过 80%，建议重启会话以获得最佳性能"
+- This prevents context compaction and maintains response quality
+
 ## Session End Routine
 
 At the end of each main session (when conversation naturally ends or human says goodbye):
@@ -83,6 +90,17 @@ Capture what matters. Decisions, context, things to remember. Skip the secrets u
 - When you make a mistake → document it so future-you doesn't repeat it
 - **Text > Brain** 📝
 
+### 数据获取经验
+
+**微信/需要登录的网页**:
+- ❌ web_fetch 失败（需要登录）
+- ✅ 用 OpenClaw 自己的浏览器: `browser action=start profile=openclaw`
+- ✅ 用 `browser open` + `browser snapshot` 获取内容
+- ✅ 关闭浏览器: `browser stop`
+
+**一般网页**:
+- ✅ web_fetch (最快)
+
 ## 🤝 Multi-Agent Collaboration
 
 ### Single Writer Principle
@@ -104,6 +122,27 @@ Capture what matters. Decisions, context, things to remember. Skip the secrets u
 - 不用在 4 个代理上重复说同一句纠正
 - 一次纠正写进 FEEDBACK-LOG.md，所有代理同步吸收
 - 重要决策写进 memory/YYYY-MM-DD.md
+
+### 讨论模式规则
+
+**何时用讨论模式**：
+| 场景 | 模式 |
+|------|------|
+| 简单明确任务 | 我分配（快速执行） |
+| 复杂技术问题 | 讨论模式 |
+| 多方案选择 | 讨论模式 |
+| 紧急deadline | 我分配 |
+
+**讨论流程**：
+1. 我发起 → 说明背景 + 目标
+2. 各自输出 → DMing（技术）、David（运营）
+3. 对比反思 → 我主持，指出矛盾点
+4. 共识决策 → 我拍板
+
+**文档存储**：
+- 位置：`memory/shared-context/讨论-问题名.md`
+- 写入者：DJJ（我）
+- 其他人只读
 
 ## Safety
 
