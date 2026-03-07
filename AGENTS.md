@@ -46,6 +46,26 @@ Monitor token usage at the start of each main session:
 - If token usage > 80%, remind 泽钢: "会话 token 使用率已超过 80%，建议重启会话以获得最佳性能"
 - This prevents context compaction and maintains response quality
 
+### 知识激活规则 (2026-03-06 新增)
+
+**目的**：确保学到的知识在合适的时候被使用
+
+**规则**：
+- 遇到技术问题时，先查阅 `memory/learning/knowledge/INDEX.md`
+- 根据场景分类，找到相关知识卡片
+- 应用知识卡片中的技术方案
+
+**触发场景**：
+- 性能优化 → 查阅"性能优化"分类
+- 分布式问题 → 查阅"分布式系统"分类
+- API 设计 → 查阅"网络/API"分类
+- Agent 开发 → 查阅"Agent/AI 开发"分类
+- 系统故障 → 查阅"监控/调试"分类
+
+**不要**：
+- 凭记忆猜测解决方案
+- 忽略已有的知识积累
+
 ## Session End Routine
 
 At the end of each main session (when conversation naturally ends or human says goodbye):

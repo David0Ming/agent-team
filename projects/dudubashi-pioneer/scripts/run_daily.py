@@ -16,12 +16,10 @@
   python3 run_daily.py --step3  # 仅执行步骤3：生成prompt
 """
 
-import os
-import sys
-import json
 import argparse
+import json
 import subprocess
-from datetime import datetime, timedelta
+from datetime import datetime
 from pathlib import Path
 
 # 配置
@@ -69,9 +67,9 @@ def step1_fetch_hotspots():
     """步骤1：搜索昨日热点"""
     log("=" * 50)
     log("【步骤1】搜索昨日热点")
-    
+
     hotspots = []
-    
+
     # 用 web_search 搜热点
     try:
         result = subprocess.run(
@@ -83,7 +81,7 @@ def step1_fetch_hotspots():
             log("web_search 热点获取成功")
     except Exception as e:
         log(f"web_search 失败: {e}", "WARNING")
-    
+
     # 如果没有热点，使用备用库
     if not hotspots:
         hotspots = [
@@ -92,69 +90,62 @@ def step1_fetch_hotspots():
             {"source": "backup", "content": "职场热点：春季跳槽季"}
         ]
         log("使用备用热点库")
-    
+
     # 保存热点
     today = datetime.now().strftime("%Y-%m-%d")
     hotspot_file = DATA_DIR / today / "hotspots.json"
     hotspot_file.parent.mkdir(parents=True, exist_ok=True)
     with open(hotspot_file, "w", encoding="utf-8") as f:
         json.dump(hotspots, f, ensure_ascii=False, indent=2)
-    
+
     log(f"热点保存到: {hotspot_file}")
     log("【步骤1】完成")
     return {"status": "success", "hotspots": hotspots}
 
 # ========== 步骤2：抓取竞品数据 ==========
 def step2_fetch_competitor():
-    """步骤2：抓取竞品数据"""
+    """步骤2：抓取竞品数据（使用agent-browser自动化）"""
     log("=" * 50)
-    log("【步骤2】抓取竞品数据")
+    log("【步骤2】抓取竞品数据（agent-browser自动化）")
+
+    try:
+        # 调用竞品抓取脚本
+        result = subprocess.run(
+            ["python3", str(SCRIPT_DIR / "fetch_competitor.py")],
+            capture_output=True,
+            text=True,
+            timeout=120
+        )
+        
+        if result.returncode == 0:
+            log("✅ 竞品数据抓取成功")
+            log(result.stdout)
+            return {"status": "success", "output": result.stdout}
+        else:
+            log(f"⚠️ 竞品数据抓取失败: {result.stderr}", "WARNING")
+            return {"status": "error", "error": result.stderr}
     
-    # 竞品数据需要通过浏览器抓取，这里标记需要手动/外部触发
-    # 实际抓取需要调用浏览器自动化脚本
-    
-    log("注意：竞品数据需要浏览器登录后抓取")
-    log("建议：手动打开浏览器登录后，运行竞品抓取脚本")
-    
-    # 标记状态
-    today = datetime.now().strftime("%Y-%m-%d")
-    comp_file = DATA_DIR / today / "competitor_status.json"
-    comp_file.parent.mkdir(parents=True, exist_ok=True)
-    
-    status = {
-        "抖音": {"status": "pending", "note": "需要浏览器登录抓取"},
-        "小红书": {"status": "pending", "note": "需要浏览器登录抓取"},
-        "视频号": {"status": "pending", "note": "需要浏览器登录抓取"}
-    }
-    
-    with open(comp_file, "w", encoding="utf-8") as f:
-        json.dump(status, f, ensure_ascii=False, indent=2)
-    
-    log("【步骤2】完成（待手动抓取）")
-    return {"status": "partial", "note": "竞品数据需要手动抓取"}
+    except Exception as e:
+        log(f"❌ 竞品数据抓取异常: {e}", "ERROR")
+        return {"status": "error", "message": str(e)}
 
 # ========== 步骤3：生成Prompt ==========
 def step3_generate_prompts():
-    """步骤3：基于热点和竞品数据生成Prompt"""
+    """步骤3：基于热点和竞品数据生成Prompt（使用V3混合方案）"""
     log("=" * 50)
-    log("【步骤3】生成视频提示词")
-    
-    today = datetime.now().strftime("%Y-%m-%d")
-    
-    # 读取热点
-    hotspot_file = DATA_DIR / today / "hotspots.json"
-    hotspots = []
-    if hotspot_file.exists():
-        with open(hotspot_file, encoding="utf-8") as f:
-            hotspots = json.load(f)
-    
-    # 读取竞品洞察
-    insight_file = DATA_DIR / today / "xiaojiang_bus_xiaohongshu.md"
-    insights = ""
-    if insight_file.exists():
-        with open(insight_file, encoding="utf-8") as f:
-            insights = f.read()
-    
+    log("【步骤3】生成视频提示词（V3混合方案：规则引擎+AI生成+反思学习）")
+
+    # 调用V3版本生成脚本
+    try:
+        from generate_prompts_v3 import generate_all_prompts
+        prompt_file = generate_all_prompts()
+        log(f"✅ AI提示词已生成: {prompt_file}")
+        log(f"📝 下一步：使用AI模型根据提示词生成完整prompt")
+        return {"status": "success", "file": str(prompt_file), "note": "需要AI生成完整内容"}
+    except Exception as e:
+        log(f"❌ Prompt生成失败: {e}")
+        return {"status": "error", "message": str(e)}
+
     # 生成Prompt
     prompt_content = f"""# 嘟嘟巴士日报 - 视频提示词
 # 生成日期: {today}
@@ -189,13 +180,13 @@ def step3_generate_prompts():
 ## 视频提示词 3
 ...
 """
-    
+
     # 保存Prompt
     prompt_file = PROMPT_DIR / today / "morning_prompt_v1.md"
     prompt_file.parent.mkdir(parents=True, exist_ok=True)
     with open(prompt_file, "w", encoding="utf-8") as f:
         f.write(prompt_content)
-    
+
     log(f"Prompt保存到: {prompt_file}")
     log("【步骤3】完成")
     return {"status": "success", "file": str(prompt_file)}
@@ -204,35 +195,35 @@ def step3_generate_prompts():
 def run_full_pipeline():
     """完整流程：步骤1 → 步骤2 → 步骤3"""
     results = {}
-    
+
     # 步骤1：热点
     try:
         results["step1"] = step1_fetch_hotspots()
     except Exception as e:
         log(f"步骤1失败: {e}", "ERROR")
         results["step1"] = {"status": "failed", "error": str(e)}
-    
+
     # 步骤2：竞品
     try:
         results["step2"] = step2_fetch_competitor()
     except Exception as e:
         log(f"步骤2失败: {e}", "ERROR")
         results["step2"] = {"status": "failed", "error": str(e)}
-    
+
     # 步骤3：生成Prompt（依赖步骤1）
     try:
         results["step3"] = step3_generate_prompts()
     except Exception as e:
         log(f"步骤3失败: {e}", "ERROR")
         results["step3"] = {"status": "failed", "error": str(e)}
-    
+
     return results
 
 # 反思环节
 def reflect(results):
     log("=" * 50)
     log("执行复盘")
-    
+
     issues = []
     if results.get("step1", {}).get("status") != "success":
         issues.append("步骤1：热点抓取失败")
@@ -240,10 +231,10 @@ def reflect(results):
         issues.append("步骤2：竞品数据待手动抓取")
     if results.get("step3", {}).get("status") != "success":
         issues.append("步骤3：Prompt生成失败")
-    
+
     for issue in issues:
         log(f"  - {issue}")
-    
+
     log("=" * 50)
 
 def main():
@@ -253,22 +244,21 @@ def main():
     parser.add_argument("--step2", action="store_true", help="仅执行步骤2：竞品")
     parser.add_argument("--step3", action="store_true", help="仅执行步骤3：生成Prompt")
     args = parser.parse_args()
-    
-    config = load_config()
+
     log("=" * 50)
     log("嘟嘟巴士先锋引擎启动")
-    
+
     # 时间检查（除非强制执行）
     if not args.force:
         if not is_10am():
             log("非10:00，跳过执行")
             return
         log("时间检查通过：10:00")
-    
+
     # 检查是否已执行（完整流程）
     if already_run_today() and not args.force and not any([args.step1, args.step2, args.step3]):
         log("今日已执行完整流程")
-    
+
     # 执行选定的步骤
     if args.step1:
         step1_fetch_hotspots()
@@ -281,7 +271,7 @@ def main():
         results = run_full_pipeline()
         reflect(results)
         mark_run_today()
-    
+
     log("执行完成")
 
 if __name__ == "__main__":

@@ -1,22 +1,22 @@
 {
   "name": "driver_persona",
-  "age": 42,
-  "personality": "爱吐槽但暖心",
-  "catchphrases": ["老铁们", "家人们", "这趟车稳了"],
+  "personality": "粤语司机，爱吐槽但暖心",
   "style": {
     "voice": "第一人称车厢见闻",
-    "language": "广深普通话特色",
-    "ending": "必须有反转"
+    "language": "粤语为主，偶尔普通话",
+    "tone": "亲切、接地气、有人情味"
   },
   "video_format": {
     "aspect_ratio": "9:16",
-    "requirement": "前3秒必须有冲突或笑点"
+    "structure": "Hook(0-3秒) → 展开(4-8秒) → 收尾(9-12秒)",
+    "hook_types": ["冲突", "笑点", "悬念", "反常识"],
+    "ending_types": ["反转", "金句", "互动", "留悬念"]
   },
   "company_info": {
     "name": "嘟嘟城际巴士",
     "tagline": "您的大湾区跨城出行优选",
     "coverage": "15个城市，800条线路",
-    "features": ["手机扫码即刻购票", "便捷出行"],
+    "features": ["手机扫码即刻购票", "便捷出行", "覆盖大湾区"],
     "hot_routes": [
       "珠海→广州",
       "广州→珠海", 
@@ -24,5 +24,9 @@
       "广州→深圳",
       "佛山→广州"
     ]
+  },
+  "brand_visual": {
+    "vehicle": "车身印有'嘟嘟巴士'四个大字的红色巴士",
+    "must_show": ["嘟嘟巴士大字", "红色车身", "司机形象"]
   }
 }

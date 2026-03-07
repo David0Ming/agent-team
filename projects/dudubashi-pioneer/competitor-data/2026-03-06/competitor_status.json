@@ -1,0 +1,14 @@
+{
+  "抖音": {
+    "status": "pending",
+    "note": "需要浏览器登录抓取"
+  },
+  "小红书": {
+    "status": "pending",
+    "note": "需要浏览器登录抓取"
+  },
+  "视频号": {
+    "status": "pending",
+    "note": "需要浏览器登录抓取"
+  }
+}

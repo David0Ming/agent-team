@@ -82,19 +82,36 @@
    - 记录当前时间、模型、Agent数量
    - 供后续查询使用
 
-5. **尝试解决一个待办任务**
+5. **更新日志**
+   - 记录心跳期间完成的工作到 `memory/daily/YYYY-MM-DD.md`
+   - 格式：简洁记录时间、任务、成果
+   - 示例：`### HH:MM 心跳 - 学习了X技能，解决了Y问题`
+
+6. **更新记忆**
+   - 重要学习成果写入主题文件
+   - 新知识 → `memory/learning/knowledge/knowledge-[主题].md`
+   - 重要决策 → `memory/decisions.md`
+   - 经验教训 → `memory/lessons.md`
+
+7. **尝试解决一个待办任务**
    - 读取 `memory/projects.md`
    - 找到 `[ ]` 未完成的任务
+   - **重要待办提醒**（每次心跳必须列出）:
+     - ❌ 学习三个中等题视频
+     - ❌ 找合适的实验论文综述
+     - ❌ 给OpenClaw连接Discord
+     - ❌ 飞书机器人上传文件权限 + 竞品可视化上传
+     - ❌ 测试prompt生成质量
    - 尝试完成其中一个（不是所有）
    - 完成后更新 projects.md 标记为 `[x]`
    - **注意**：只尝试，不强制完成；复杂的需要向泽钢确认
 
-6. **嘟嘟巴士先锋引擎（每日10:00）**
-   - 检查当前时间是否 10:00-10:05 (Asia/Shanghai)
+8. **嘟嘟巴士先锋引擎（每日09:00）**
+   - 检查当前时间是否 09:00-09:05 (Asia/Shanghai)
    - 如果是且今日未执行，运行 `python3 ~/.openclaw/workspace/projects/dudubashi-pioneer/scripts/run_daily.py`
    - 执行后记录状态
 
-7. **周报任务（每周五17:00）**
+9. **周报任务（每周五17:00）**
    - 检查当前时间是否周五 17:00-17:05
    - 如果是，生成周报
    - 读取 memory/weekly-records.md
@@ -102,15 +119,26 @@
 
 ## 执行频率
 
-- DJJ 每 15 分钟心跳一次
+- DJJ 每 **1小时** 心跳一次
 - 其他 Agent 每 30 分钟心跳一次
-- **学习保证**: 每次心跳必须获得至少 1 个学习成果
+- **个人待办提醒**：每 **30分钟** 独立执行（不与心跳合并）
 
 ## 🚀 定时自动化任务
 
-### 嘟嘟巴士先锋引擎（每日 10:00）
+### 个人待办提醒（每30分钟）
 
-检查是否到执行时间（10:00），如果到达且今日未执行，运行：
+单独设置定时任务，提醒5个待办事项：
+- 学习三个中等题视频
+- 找合适的实验论文综述
+- 给OpenClaw连接Discord
+- 飞书机器人上传文件权限 + 竞品可视化上传
+- 给韦达发送3条Prompt
+
+## 🚀 定时自动化任务
+
+### 嘟嘟巴士先锋引擎（每日 09:00）
+
+检查是否到执行时间（09:00），如果到达且今日未执行，运行：
 
 ```bash
 python3 ~/.openclaw/workspace/projects/dudubashi-pioneer/scripts/run_daily.py
@@ -156,3 +184,58 @@ python3 ~/.openclaw/workspace/projects/dudubashi-pioneer/scripts/run_daily.py
   "errors": []
 }
 ```
+
+## 🛡️ 系统维护（预防机制）
+
+### 每日维护（每次心跳）
+- [ ] 检查今日创建的文件，评估价值
+- [ ] 检查技能使用情况（参考SKILL-USAGE-RULES.md）
+- [ ] 提醒未使用的技能
+
+### 每周维护（周日执行）
+**触发条件**：当前是周日
+
+- [ ] 清理本周未使用的知识卡片
+- [ ] 评估技能使用率（目标>80%）
+- [ ] 检查记忆文件数量（目标<80）
+- [ ] 更新INDEX.md使用统计
+
+**执行命令**：
+```bash
+# 检查知识卡片数量
+ls ~/.openclaw/workspace/memory/learning/knowledge/knowledge-*.md | wc -l
+
+# 检查技能数量
+ls -d ~/.openclaw/workspace/skills/*/ | wc -l
+
+# 检查记忆文件总数
+find ~/.openclaw/workspace/memory -type f -name "*.md" | wc -l
+```
+
+### 每月维护（月初执行）
+**触发条件**：当前是每月1-3号
+
+- [ ] 归档上月日志
+- [ ] 清理>30天未使用的知识卡片
+- [ ] 清理>30天未使用的技能
+- [ ] 生成月度维护报告
+
+**执行命令**：
+```bash
+# 归档上月日志
+LAST_MONTH=$(date -d "last month" +%Y-%m)
+mkdir -p ~/.openclaw/workspace/memory/archive/$LAST_MONTH/
+mv ~/.openclaw/workspace/memory/daily/$LAST_MONTH/* ~/.openclaw/workspace/memory/archive/$LAST_MONTH/
+```
+
+## 📊 监控指标（每次心跳检查）
+
+- 知识卡片数量（目标<50，当前27）
+- 技能使用率（目标>80%，当前23%）
+- 记忆文件总数（目标<80，当前98）
+
+**警报触发**：
+- 知识卡片>60 → 立即清理
+- 技能使用率<70% → 反思并改进
+- 记忆文件>100 → 立即清理
+

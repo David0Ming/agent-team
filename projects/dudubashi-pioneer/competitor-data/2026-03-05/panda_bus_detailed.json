@@ -1,0 +1,53 @@
+{
+  "brand": "熊猫哒巴士",
+  "list_id": "ozs697lbubnf",
+  "total": 3,
+  "platforms": {
+    "视频号": 2,
+    "抖音": 1
+  },
+  "accounts": [
+    {
+      "name": "熊猫哒巴士1号",
+      "platform": "视频号",
+      "recent_works": 10,
+      "category": "生活",
+      "fans": "-",
+      "new_rank_index": 334.3,
+      "region": "广州",
+      "recent_likes": 120,
+      "description": "广东城际线路200➕ 每天分享超多巴士精彩资讯！"
+    },
+    {
+      "name": "熊猫哒安心行",
+      "platform": "视频号",
+      "recent_works": 3,
+      "category": "企业",
+      "fans": "-",
+      "new_rank_index": 364.0,
+      "region": "-",
+      "recent_likes": 133,
+      "description": "熊猫哒巴士专注珠三角城际快线"
+    },
+    {
+      "name": "熊猫哒巴士生活版",
+      "platform": "抖音",
+      "douyin_id": "31209308387",
+      "recent_works": 7,
+      "category": "时政社会",
+      "fans": "1.07w",
+      "new_rank_index": 352.4,
+      "region": "广州",
+      "recent_likes": 45,
+      "description": "广东出行→熊猫哒巴士"
+    }
+  ],
+  "data_date": "2026-03-05",
+  "insights": {
+    "main_platform": "视频号",
+    "content_categories": ["生活", "企业", "时政社会"],
+    "key_themes": ["城际快线", "优惠信息", "新线路开通"],
+    "content_style": "资讯分享 + 线路推广",
+    "posting_frequency": "3-10条/周"
+  }
+}

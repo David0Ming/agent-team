@@ -1,0 +1,22 @@
+{
+  "source": "新榜达人清单",
+  "date": "2026-03-05",
+  "lists": [
+    {
+      "name": "熊猫哒巴士",
+      "count": 3,
+      "id": "ozs697lbubnf",
+      "purpose": "-",
+      "created": "2026-03-05"
+    },
+    {
+      "name": "小江巴士",
+      "count": 15,
+      "id": "qwiswt2tu9fo", 
+      "purpose": "学习模仿",
+      "created": "2026-03-05"
+    }
+  ],
+  "total_accounts": 18,
+  "platform": "全平台"
+}

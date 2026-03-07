@@ -1,0 +1,16 @@
+{
+  "lastCheck": "2026-03-06T10:34:00Z",
+  "gateway": {
+    "running": true,
+    "agents": 11,
+    "defaultModel": "claude-sonnet-4-5"
+  },
+  "currentSession": {
+    "model": "claude-sonnet-4-5",
+    "tokens": "150k/200k (75%)"
+  },
+  "errors": [],
+  "warnings": [
+    "plugins.allow is empty"
+  ]
+}
