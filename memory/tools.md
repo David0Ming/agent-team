@@ -60,3 +60,10 @@ openclaw config set <path> <value>
 | Kimi | OPENAI_API_KEY | ✅ 已配置 |
 | DeepSeek | DEEPSEEK_API_KEY | ✅ 已配置 |
 | Anthropic (中转) | ANTHROPIC_API_KEY + ANTHROPIC_BASE_URL | ✅ 已配置 |
+
+## GitHub 配置
+
+- **账号**: David0Ming
+- **邮箱**: david0ming@github.com
+- **Token**: 已保存在 ~/.git-credentials（不提交到仓库）
+- **仓库**: https://github.com/David0Ming/agent-team
