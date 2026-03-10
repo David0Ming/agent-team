@@ -1,0 +1,132 @@
+{
+  "brand": "熊猫哒巴士",
+  "list_id": "ozs697lbubnf",
+  "total": 12,
+  "platforms": {
+    "视频号": 12
+  },
+  "accounts": [
+    {
+      "name": "熊猫哒走吧",
+      "recent_works": "8",
+      "category": "企业",
+      "fans": "569.4",
+      "platform": "视频号",
+      "new_rank_index": 0,
+      "region": "2393",
+      "recent_likes": "广州"
+    },
+    {
+      "name": "熊猫哒财运通",
+      "recent_works": "9",
+      "category": "汽车",
+      "fans": "349.8",
+      "platform": "视频号",
+      "new_rank_index": 0,
+      "region": "138",
+      "recent_likes": "-"
+    },
+    {
+      "name": "熊猫哒安全出行",
+      "recent_works": "5",
+      "category": "企业",
+      "fans": "263.4",
+      "platform": "视频号",
+      "new_rank_index": 0,
+      "region": "39",
+      "recent_likes": "广州"
+    },
+    {
+      "name": "熊猫哒猫",
+      "recent_works": "-",
+      "category": "生活",
+      "fans": "--/-",
+      "platform": "视频号",
+      "new_rank_index": 0,
+      "region": "-",
+      "recent_likes": "-"
+    },
+    {
+      "name": "熊猫哒巴士",
+      "recent_works": "-",
+      "category": "生活",
+      "fans": "--/-",
+      "platform": "视频号",
+      "new_rank_index": 0,
+      "region": "-",
+      "recent_likes": "-"
+    },
+    {
+      "name": "熊猫哒出行巴",
+      "recent_works": "-",
+      "category": "生活",
+      "fans": "--/-",
+      "platform": "视频号",
+      "new_rank_index": 0,
+      "region": "-",
+      "recent_likes": "-"
+    },
+    {
+      "name": "熊猫哒小壮",
+      "recent_works": "-",
+      "category": "生活",
+      "fans": "--/-",
+      "platform": "视频号",
+      "new_rank_index": 0,
+      "region": "-",
+      "recent_likes": "-"
+    },
+    {
+      "name": "熊猫哒趣巴士",
+      "recent_works": "-",
+      "category": "生活",
+      "fans": "--/-",
+      "platform": "视频号",
+      "new_rank_index": 0,
+      "region": "-",
+      "recent_likes": "-"
+    },
+    {
+      "name": "小熊猫哒哒萌",
+      "recent_works": "-",
+      "category": "生活",
+      "fans": "--/-",
+      "platform": "视频号",
+      "new_rank_index": 0,
+      "region": "-",
+      "recent_likes": "-"
+    },
+    {
+      "name": "熊猫哒跨城巴士",
+      "recent_works": "-",
+      "category": "生活",
+      "fans": "--/-",
+      "platform": "视频号",
+      "new_rank_index": 0,
+      "region": "-",
+      "recent_likes": "-"
+    },
+    {
+      "name": "熊猫哒巴士1号",
+      "recent_works": "10",
+      "category": "生活",
+      "fans": "334.3",
+      "platform": "视频号",
+      "new_rank_index": 0,
+      "region": "120",
+      "recent_likes": "广州"
+    },
+    {
+      "name": "熊猫哒安心行",
+      "recent_works": "3",
+      "category": "企业",
+      "fans": "364.0",
+      "platform": "视频号",
+      "new_rank_index": 0,
+      "region": "133",
+      "recent_likes": "-"
+    }
+  ],
+  "data_date": "2026-03-09",
+  "timestamp": "2026-03-09T10:22:00.603669"
+}

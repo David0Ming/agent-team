@@ -53,3 +53,18 @@
 - ** Anthropic 配置**: 
   - BASE_URL: https://imds.ai/v1
   - API_KEY: sk-2864...（已配置到 env）
+
+### 2026-03-10: 项目记忆隔离原则
+- **决策**: 项目特定的知识和经验必须存储在项目目录中，不污染全局记忆系统
+- **背景**: 嘟嘟巴士项目执行中发现，项目特定的规范、决策混入全局记忆，导致上下文混乱
+- **原则**:
+  - 项目特定知识 → 存储在 `projects/{project}/PROJECT-MEMORY.md`
+  - 项目规范标准 → 存储在 `projects/{project}/docs/`
+  - 通用方法论 → 存储在 `memory/lessons-{agent}.md`
+  - 个人经验 → 存储在 `memory/lessons-{agent}.md`
+- **示例**:
+  - ✅ 嘟嘟巴士的品牌规范 → `projects/dudubashi-pioneer/PROJECT-MEMORY.md`
+  - ✅ 敏感词管理方法 → `memory/lessons-djj.md`
+  - ❌ 不要将项目规范写入全局memory/
+- **适用范围**: 所有agent（DJJ、DMing、David等）
+- **执行**: 接手项目时，先读取项目的PROJECT-MEMORY.md和README.md

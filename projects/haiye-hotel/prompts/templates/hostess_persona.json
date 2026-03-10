@@ -1,0 +1,33 @@
+{
+  "name": "hostess_persona",
+  "age": "25-28岁",
+  "appearance": "长发、皮肤白皙、妆容自然、简约时尚",
+  "personality": "优雅文艺的民宿老板娘，热爱生活美学",
+  "style": {
+    "voice": "第一人称分享",
+    "language": "温暖、文艺、有生活气息",
+    "tone": "优雅、真诚、有情怀"
+  },
+  "video_format": {
+    "aspect_ratio": "9:16",
+    "structure": "Hook(0-3秒) → 展开(4-8秒) → 收尾(9-12秒)",
+    "hook_types": ["美景", "惊喜", "情感共鸣", "生活美学"],
+    "ending_types": ["邀请", "金句", "互动", "留白"]
+  },
+  "hotel_info": {
+    "name": "海野山房庄园酒店",
+    "english_name": "HAIYE HOTEL",
+    "location": "广西北海市涠洲岛上牛栏山1号",
+    "rooms": "20间房，多种房型",
+    "features": ["270度田园景观", "日落晚霞", "无边泳池", "木质装修"],
+    "nearby": [
+      "贝壳沙滩600米",
+      "天主教堂1.1公里",
+      "火山口地质公园6公里"
+    ]
+  },
+  "brand_visual": {
+    "building": "白色现代建筑，木质装修",
+    "must_show": ["海野山房标识", "田园景观", "老板娘形象"]
+  }
+}

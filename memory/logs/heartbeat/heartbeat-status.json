@@ -1,16 +1,13 @@
 {
-  "lastCheck": "2026-03-06T10:34:00Z",
+  "lastCheck": "2026-03-07T15:06:00+08:00",
   "gateway": {
     "running": true,
-    "agents": 11,
-    "defaultModel": "claude-sonnet-4-5"
+    "status": "active",
+    "pid": 1606
   },
-  "currentSession": {
-    "model": "claude-sonnet-4-5",
-    "tokens": "150k/200k (75%)"
-  },
-  "errors": [],
-  "warnings": [
-    "plugins.allow is empty"
-  ]
+  "skillsDetected": [
+    "agent-browser",
+    "product-manager-toolkit"
+  ],
+  "notes": "泽钢正在进行毕设训练，2天冲刺计划进行中"
 }

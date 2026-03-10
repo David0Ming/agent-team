@@ -29,6 +29,8 @@ LOG_DIR = PROJECT_DIR / "logs"
 DATA_DIR = PROJECT_DIR / "competitor-data"
 PROMPT_DIR = PROJECT_DIR / "prompts"
 
+SCRIPT_DIR = PROJECT_DIR / "scripts"
+
 # 加载配置
 def load_config():
     with open(CONFIG_FILE) as f:
@@ -43,12 +45,12 @@ def log(msg, level="INFO"):
         f.write(f"[{timestamp}] [{level}] {msg}\n")
     print(f"[{timestamp}] [{level}] {msg}")
 
-# 检查时间是否10:00
-def is_10am():
+# 检查时间是否09:00
+def is_9am():
     now = datetime.now()
     hour = now.hour
     minute = now.minute
-    return hour == 10 and minute < 5
+    return hour == 9 and minute < 5
 
 # 检查是否已执行
 def already_run_today():
@@ -70,17 +72,24 @@ def step1_fetch_hotspots():
 
     hotspots = []
 
-    # 用 web_search 搜热点
+    # 用 web_search 搜热点（通过requests直接调用）
     try:
-        result = subprocess.run(
-            ["codex", "exec", "--", "web_search", "--query", "今日热点 微博 知乎 2026年3月", "--count", "5"],
-            capture_output=True, text=True, timeout=60
-        )
-        if result.returncode == 0:
-            hotspots.append({"source": "web_search", "content": result.stdout[:1000]})
-            log("web_search 热点获取成功")
+        import requests
+        # 使用微博热搜API（公开接口）
+        response = requests.get("https://weibo.com/ajax/side/hotSearch", timeout=10)
+        if response.status_code == 200:
+            data = response.json()
+            if data.get("ok") == 1:
+                hot_list = data.get("data", {}).get("realtime", [])[:5]
+                for item in hot_list:
+                    hotspots.append({
+                        "source": "weibo",
+                        "content": item.get("word", ""),
+                        "rank": item.get("rank", 0)
+                    })
+                log(f"微博热搜获取成功，共{len(hotspots)}条")
     except Exception as e:
-        log(f"web_search 失败: {e}", "WARNING")
+        log(f"微博热搜获取失败: {e}", "WARNING")
 
     # 如果没有热点，使用备用库
     if not hotspots:
@@ -139,9 +148,24 @@ def step3_generate_prompts():
     try:
         from generate_prompts_v3 import generate_all_prompts
         prompt_file = generate_all_prompts()
-        log(f"✅ AI提示词已生成: {prompt_file}")
-        log(f"📝 下一步：使用AI模型根据提示词生成完整prompt")
-        return {"status": "success", "file": str(prompt_file), "note": "需要AI生成完整内容"}
+        log(f"✅ AI提示词框架已生成: {prompt_file}")
+        
+        # 调用fill_prompts.py填充完整内容
+        log("开始生成完整prompt内容...")
+        result = subprocess.run(
+            ["python3", str(SCRIPT_DIR / "fill_prompts.py")],
+            capture_output=True,
+            text=True,
+            timeout=300
+        )
+        
+        if result.returncode == 0:
+            log("✅ 完整prompt已生成")
+            log(result.stdout)
+            return {"status": "success", "file": str(prompt_file)}
+        else:
+            log(f"⚠️ Prompt填充失败: {result.stderr}", "WARNING")
+            return {"status": "partial", "file": str(prompt_file), "note": "框架已生成，内容填充失败"}
     except Exception as e:
         log(f"❌ Prompt生成失败: {e}")
         return {"status": "error", "message": str(e)}
@@ -250,10 +274,10 @@ def main():
 
     # 时间检查（除非强制执行）
     if not args.force:
-        if not is_10am():
-            log("非10:00，跳过执行")
+        if not is_9am():
+            log("非09:00，跳过执行")
             return
-        log("时间检查通过：10:00")
+        log("时间检查通过：09:00")
 
     # 检查是否已执行（完整流程）
     if already_run_today() and not args.force and not any([args.step1, args.step2, args.step3]):

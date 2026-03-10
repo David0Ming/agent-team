@@ -1,0 +1,57 @@
+{
+  "files": {},
+  "skills": {
+    "tavily-search": {
+      "first_use": "2026-03-07T13:08:38.693998",
+      "last_use": "2026-03-07T15:12:13.981255",
+      "use_count": 2,
+      "description": "搜索最新知识"
+    },
+    "product-manager-toolkit": {
+      "first_use": "2026-03-07T13:08:38.720713",
+      "last_use": "2026-03-07T15:11:00.321566",
+      "use_count": 7,
+      "description": "RICE分析"
+    },
+    "git-commit": {
+      "first_use": "2026-03-07T13:10:48.671509",
+      "last_use": "2026-03-07T13:36:54.218472",
+      "use_count": 2,
+      "auto_detected": true
+    },
+    "agent-browser": {
+      "first_use": "2026-03-07T13:10:48.671509",
+      "last_use": "2026-03-07T15:11:00.321566",
+      "use_count": 6,
+      "auto_detected": true
+    }
+  },
+  "auto_detected": {
+    "2026-03-07T13:10:48.671509": [
+      "git-commit",
+      "product-manager-toolkit",
+      "agent-browser"
+    ],
+    "2026-03-07T13:36:54.218472": [
+      "git-commit",
+      "product-manager-toolkit",
+      "agent-browser"
+    ],
+    "2026-03-07T14:06:57.987659": [
+      "product-manager-toolkit",
+      "agent-browser"
+    ],
+    "2026-03-07T14:36:59.943454": [
+      "product-manager-toolkit",
+      "agent-browser"
+    ],
+    "2026-03-07T15:07:04.118670": [
+      "agent-browser",
+      "product-manager-toolkit"
+    ],
+    "2026-03-07T15:11:00.321566": [
+      "agent-browser",
+      "product-manager-toolkit"
+    ]
+  }
+}

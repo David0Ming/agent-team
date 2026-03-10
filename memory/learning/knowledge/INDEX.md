@@ -1,15 +1,19 @@
 # 知识索引 - 按场景分类
 
 > 💡 **使用说明**：遇到相关场景时，查阅对应知识卡片
-> 📊 **当前知识卡片数量**：27个（已优化）
+> 📊 **当前知识卡片数量**：38个（已优化）
 
 ## 🤖 Agent/AI 开发
 
 **何时查阅**：开发、调试、优化 AI Agent 时
 
+- `agent-automation` - Agent自动化提升、工具链、协作模式 ✅ 已使用
+- `agent-collaboration-patterns` - 协作模式、文件即接口、单写者原则 ✅ 已使用
+- `agent-efficiency` - Agent团队效率提升方法论 ✅ 已使用
+- `agent-tools` - 自动化工具使用指南 ✅ 已使用
 - `agent-browser` - 浏览器自动化工具 ✅ 已使用
-- `agent-debugging` - Agent 行为异常、决策不符合预期
-- `agent-memory` - 设计 Agent 记忆系统、上下文管理
+- `agent-debugging` - Agent 行为异常、决策不符合预期 ✅ 已使用
+- `agent-memory` - 设计 Agent 记忆系统、上下文管理 ✅ 已使用
 - `session-memory` - Session 记忆管理
 - `claude-code-chrome` - 使用 Claude Code 浏览器功能
 - `claude-code-hooks` - 配置 Claude Code 钩子
@@ -45,9 +49,9 @@
 
 **何时查阅**：API 设计、网络通信、接口优化时
 
-- `resilient-api` - 弹性 API 设计
-- `robust-error-handling` - 健壮的错误处理
-- `robust-http` - 健壮的 HTTP 通信
+- `resilient-api` - 弹性 API 设计 ✅ 已使用
+- `robust-error-handling` - 健壮的错误处理 ✅ 已使用
+- `robust-http` - 健壮的 HTTP 通信 ✅ 已使用
 
 ## 📋 产品管理
 
@@ -67,16 +71,31 @@
 
 ## 📊 使用统计
 
-- ✅ 已使用：3个（agent-browser, product-management, tavily-search）
-- 📚 应该使用：5个（agent-debugging, agent-memory, resilient-api, robust-error-handling, robust-http）
-- 📦 备用：19个
+- ✅ 已使用：18个（agent-automation, agent-collaboration-patterns, agent-efficiency, agent-tools, agent-browser, agent-debugging, agent-memory, resilient-api, robust-error-handling, robust-http, session-memory, superpowers, cache-penetration, connection-pool, async-batch, product-management, tavily-search, performance-optimization）
+- 📚 应该使用：0个
+- 📦 备用：20个
 
-## 🎯 下次使用提醒
+## 🎯 下一步行动提醒
 
-**遇到bug时** → 查阅 `agent-debugging`
-**设计记忆系统时** → 查阅 `agent-memory`
-**API设计时** → 查阅 `resilient-api`, `robust-error-handling`
-**分布式问题时** → 查阅 `circuit-breaker`, `fault-tolerance`
+**遇到bug时**：
+1. 查阅 `agent-debugging`
+2. 应用系统化调试流程
+3. 记录解决方案到lessons.md
+
+**设计记忆系统时**：
+1. 查阅 `agent-memory`
+2. 确定记忆范围和生命周期
+3. 实现文件即接口
+
+**API设计时**：
+1. 查阅 `resilient-api`, `robust-error-handling`
+2. 实现重试机制和熔断器
+3. 添加完善的错误处理
+
+**分布式问题时**：
+1. 查阅 `circuit-breaker`, `fault-tolerance`
+2. 评估故障影响范围
+3. 实现自愈机制
 
 ---
 

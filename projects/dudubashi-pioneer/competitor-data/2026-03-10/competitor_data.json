@@ -1,0 +1,18 @@
+[
+  {
+    "platform": "xiaohongshu",
+    "competitor": "小江巴士",
+    "status": "success",
+    "snapshot": "(no interactive elements)\n",
+    "screenshot": "/home/mzg/.openclaw/workspace/projects/dudubashi-pioneer/competitor-data/2026-03-10/小江巴士_xiaohongshu.png",
+    "timestamp": "2026-03-10T09:39:05.355199"
+  },
+  {
+    "platform": "xiaohongshu",
+    "competitor": "熊猫哒巴士",
+    "status": "success",
+    "snapshot": "(no interactive elements)\n",
+    "screenshot": "/home/mzg/.openclaw/workspace/projects/dudubashi-pioneer/competitor-data/2026-03-10/熊猫哒巴士_xiaohongshu.png",
+    "timestamp": "2026-03-10T09:39:12.866296"
+  }
+]
