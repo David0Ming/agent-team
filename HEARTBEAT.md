@@ -22,8 +22,6 @@
 - 为什么有价值：1-2句话
 - 存到：`memory/learning-log.md`
 
-**注意**：心跳中只做轻量发现，深度学习（5步法）在专门学习时进行
-
 ### 3. 待办任务
 - 读取 `memory/projects.md`
 - **展示所有 `[ ]` 未完成的任务列表**
@@ -44,42 +42,26 @@
 - 系统状态：Gateway状态、错误（仅在有异常时记录）
 - 学习成果：发现的先进知识（简要）
 - 待办检查：列出未完成任务
-- 完成工作：简要列表（允许与详细记录重复）
+- 完成工作：简要列表
 
 **重要学习成果**：
 - 写入主题文件（`memory/decisions.md`, `memory/lessons.md`等）
-
-**注意**：心跳记录允许重复，会话结束时会整合去重
 
 ## 定时任务
 
 ### 文件归档（每周日）
 检查当前是否周日，如果是：
-- 归档 >7天的日志到 memory/archive/
+- 归档>7天的日志到memory/archive/
   ```bash
   find memory/daily/ -name "*.md" -mtime +7 -exec sh -c 'mkdir -p memory/archive/$(date -r {} +%Y-%m) && mv {} memory/archive/$(date -r {} +%Y-%m)/' \;
   ```
-
-### 嘟嘟巴士先锋引擎（每日 09:00）
-检查当前时间是否 09:00-09:05 (Asia/Shanghai)，如果是且今日未执行：
-```bash
-python3 ~/.openclaw/workspace/projects/dudubashi-pioneer/scripts/run_daily.py
-```
-
-### 海野山房酒店视频（每日 13:40）
-检查当前时间是否 13:40-13:45 (Asia/Shanghai)，如果是且今日未执行：
-```bash
-python3 ~/.openclaw/workspace/projects/haiye-hotel/scripts/run_daily.py
-```
-
-### 竞品数据抓取（每日 09:10）
-检查当前时间是否 09:10-09:15 (Asia/Shanghai)，如果是且今日未执行：
-```bash
-cd ~/.openclaw/workspace/projects/dudubashi-pioneer && \
-python3 scripts/fetch_newrank_auto.py && \
-python3 scripts/generate_competitor_report.py && \
-python3 scripts/visualize_competitors.py
-```
+- 评估知识卡片：删除6个月未使用的
+  - 检查memory/learning/knowledge/中的文件
+  - 查看最后修改时间：`find memory/learning/knowledge/ -name "*.md" -mtime +180`
+  - 确认后删除无价值的卡片
+- 压缩MEMORY.md：保持<100行
+  - 检查行数：`wc -l memory/MEMORY.md`
+  - 如果>100行，提炼精简或归档到knowledge/
 
 ## 执行频率
 - 所有Agent: 每1小时心跳一次

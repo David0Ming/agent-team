@@ -11,10 +11,11 @@
 5. [知识激活](#知识激活)
 6. [会话结束流程](#会话结束流程)
 7. [记忆管理](#记忆管理)
-8. [多Agent协作](#多agent协作)
-9. [安全规则](#安全规则)
-10. [群聊规则](#群聊规则)
-11. [心跳规则](#心跳规则)
+8. [简洁性原则](#简洁性原则)
+9. [多Agent协作](#多agent协作)
+10. [安全规则](#安全规则)
+11. [群聊规则](#群聊规则)
+12. [心跳规则](#心跳规则)
 
 ---
 
@@ -24,28 +25,22 @@
 每次会话开始时，按顺序执行以下步骤建立上下文
 
 ### INPUTS
-必读文件：
-1. `SOUL.md` - 你的身份和性格
-2. `USER.md` - 用户信息（泽钢）
-3. `memory/YYYY-MM-DD.md` - 今天和昨天的记录
-4. `memory/projects.md` - 未完成任务列表
-5. `memory/learning/knowledge/INDEX.md` - 知识卡片索引
-6. `skills/README.md` - 技能索引
+**所有Agent必读**：
+1. `SOUL.md` - 身份和规则
+2. `USER.md` - 用户信息
+3. `AGENTS.md` - 工作流程
+4. `memory/learning/knowledge/INDEX.md` - 知识索引
+5. `memory/tools.md` - 工具配置
+6. `skills/INDEX.md` - 技能索引
 
-主会话额外读取：
-- `memory/README.md`
-- `memory/identity.md`, `memory/user.md`, `memory/decisions.md`, `memory/lessons.md`, `memory/tools.md`
-- `TOOLS.md` - 速查表（常用命令、快捷方式）
+**DJJ额外读取**：
+9. `memory/projects.md` - 待办任务列表
 
-各Agent专业lessons（分层模式）：
-- 所有Agent：读取 `memory/lessons.md`（通用经验）
-- DMing：额外读取 `memory/lessons-dming.md`（技术经验）
-- David：额外读取 `memory/lessons-david.md`（运营经验）
-- 其他Agent：读取对应的 `memory/lessons-{agent}.md`
-
-**Tools文件说明**：
-- `TOOLS.md`：速查表（日常高频命令、快捷方式）
-- `memory/tools.md`：详细配置（模型、API、插件）
+**不在启动时读取**（需要时再读）：
+- `memory/daily/*.md` - 具体日志
+- `memory/lessons*.md` - 经验文件（定期提炼到知识卡片/AGENTS.md）
+- `memory/learning/knowledge/*.md` - 具体知识卡片（INDEX已提供索引）
+- `skills/*/SKILL.md` - 具体技能文档（INDEX已提供索引）
 
 ### CONSTRAINTS
 - 群聊/共享会话：禁止读取私人记忆文件
@@ -79,7 +74,7 @@
 
 ### CONSTRAINTS
 - 禁止直接执行任务
-- 禁止说"记住了"而不行动
+- **禁止口头说"记住了"**：必须说明写入了哪个文件（如"已写入memory/lessons-djj.md"）
 - 禁止敷衍回答
 - 遵循`OPERATION-BOUNDARIES.md`中的操作分级
 - **必须先问问题理解需求，不要直接给答案**
@@ -189,6 +184,11 @@
 - `tools/` - 可用工具
 
 ### CONSTRAINTS
+- **检索优先原则**（先搜索，再行动）：
+  - 回答问题前 → memory_search相关主题
+  - 执行任务前 → 检查memory/projects.md和相关知识
+  - 做决策前 → 搜索过往decisions
+  - 不确定时 → 搜索而不是猜测
 - **必须主动使用工具和知识，不要等待提醒**
 - 不要凭记忆猜测解决方案
 - 不要忽略已有的知识积累
@@ -243,6 +243,10 @@
 - 任务分类 → task-classifier.py
 - 工作流优化 → knowledge-workflow-optimization.md
 
+**系统维护**：
+- "更新OpenClaw" / "升级OpenClaw" / "update openclaw" → 自动运行 `python ~/.openclaw/workspace/skills/self-updater/scripts/self-update-enhanced.py`
+- 更新完成后自动修复麦克风权限等配置
+
 **核心原则**：
 工具和知识是我的"本能"，不是"手册"。收到任务立即激活，不要等待提醒。
 
@@ -251,30 +255,20 @@
 ## 会话结束流程
 
 ### INSTRUCTIONS
-会话自然结束或泽钢说再见时，更新记忆文件
+会话自然结束或泽钢说再见时，简短总结
 
 ### INPUTS
-- 本次会话的关键决策
 - 完成的任务
-- 重要上下文
+- 待办事项
 
 ### CONSTRAINTS
-- 只在主会话结束时执行
-- 不要在每次回复后都更新
+- 只在明确结束时执行
+- 不记录日志（由心跳负责）
 
 ### OUTPUT FORMAT
-1. **整合日志**：读取并整合`memory/daily/YYYY-MM-DD.md`
-   - 读取当天日志（包含心跳快照和详细记录）
-   - 去除重复内容（详细记录覆盖简要快照）
-   - 补充会话总结和关键洞察
-   - 重写为干净的最终版本
-
-2. **更新项目文件**（如需要）：
-   - `memory/projects.md` - 标记完成的任务为`[x]`
-
-3. **简短总结**：
-   - 本次完成了什么
-   - 还有什么待办
+**简短总结**：
+- 完成：[任务列表]
+- 待办：[未完成事项]
 
 ---
 
@@ -289,12 +283,15 @@
 - 知识卡片：`memory/learning/knowledge/*.md`
 
 ### CONSTRAINTS
-- **核心原则**：记忆的真正目的是"建立可复用的知识体系"，不是"记录做了什么"
+- **核心原则**：文件是唯一真相来源（Single Source of Truth）
+  - 口头说"记住了" = 无效
+  - 必须说明写入了哪个文件（如"已写入memory/lessons-djj.md"）
+  - 会话记忆会消失，文件记忆永久存在
+- **记忆目的**：建立可复用的知识体系，不是"记录做了什么"
 - **主题分类**：每条记忆都应归类到主题文件（decisions/lessons/tools/projects），不创建临时文件
 - **提炼规则**：不记录"做了什么"，而是提炼"学到了什么规则"
 - **安全规则**：主会话才能读取私人记忆文件
 - **群聊/共享会话**：禁止读取私人记忆
-- **写入规则**：重要信息必须写入文件，不要依赖"记住"
 
 ### OUTPUT FORMAT
 记忆文件格式：
@@ -315,6 +312,53 @@
 4. 验证：测试理解
 5. 记忆：存入文件
 6. 用起来：实践应用
+
+**知识进化路径**：
+1. 日常经验 → memory/daily/*.md
+2. 提炼规则 → memory/lessons-*.md
+3. 通用知识 → memory/learning/knowledge/*.md
+4. 可复用能力 → skills/
+
+---
+
+## 简洁性原则
+
+### INSTRUCTIONS
+所有记录、记忆、总结都要简洁精炼，避免冗长
+
+### INPUTS
+- 日志记录
+- 知识卡片
+- 会话总结
+- 经验教训
+
+### CONSTRAINTS
+- **核心原因**：这些内容是给AI读的，冗长会消耗大量token
+- **记录原则**：只记关键信息，不记过程细节
+- **总结原则**：用最少的字表达完整的意思
+- **避免重复**：不要在多个地方记录相同内容
+
+### OUTPUT FORMAT
+
+**简洁记录示例**：
+```markdown
+❌ 冗长：今天我们遇到了网络搜索的问题，经过长时间的调试和测试，最终发现是代理配置的问题，然后我们配置了HTTP_PROXY和HTTPS_PROXY环境变量，重启了Gateway，最后成功解决了问题。
+
+✅ 简洁：网络搜索问题→配置代理（HTTP_PROXY+HTTPS_PROXY）→重启Gateway→解决
+```
+
+**简洁总结示例**：
+```markdown
+❌ 冗长：今天完成了很多工作，首先解决了网络搜索问题，然后找到了TTS方案，还测试了Codex搜索，更新了文档，发现了技能位置问题，优化了INDEX.md...
+
+✅ 简洁：完成：网络搜索配置、TTS方案选择、Codex测试、文档更新
+```
+
+**关键规则**：
+- 用→表示流程
+- 用列表代替段落
+- 删除形容词和副词
+- 只保留核心信息
 
 ---
 
@@ -495,11 +539,39 @@
 - **复杂网页抓取**：使用`web-scraping`技能（反爬虫、内容提取、API发现）
 - **浏览器自动化**：使用`agent-browser`技能（导航、交互、截图）
 
-### 搜索增强
-- **基础搜索**：用`web_search`或`web_fetch`
-- **深度搜索**：使用Codex搜索 `exec codex exec "搜索查询"`（更强推理）
-- **技能查找**：使用`find-skills`技能发现新技能
-- **最近30天研究**：使用`last30days`技能（Reddit + X + Web综合研究）
+### 网络搜索使用指南
+
+**工具选择**：
+- **web_search**（首选）：搜索最新信息，不知道网址时使用
+- **web_fetch**（直接获取）：知道具体网址，直接获取页面内容
+- **Codex --search**（深度研究）：需要AI理解和推理的复杂研究
+  - ⚠️ 必须明确告诉它使用web_search：`codex --search exec "请使用web_search工具搜索：[问题]。直接执行搜索，不要问我问题。"`
+  - 只用`--search`参数不会自动搜索，会先问澄清问题
+- **agent-browser**（复杂交互）：需要登录或JS渲染的页面
+- **last30days**技能：Reddit + X + Web综合研究（最近30天）
+
+**当前配置**（2026-03-15已配置）：
+- 代理：HTTP_PROXY + HTTPS_PROXY = http://127.0.0.1:7890
+- 提供商：Brave Search（推荐）
+- 备用：Gemini、Kimi、Perplexity
+
+**遇到问题时**：
+1. 检查错误信息：
+   - "fetch failed" → 网络问题，检查代理配置
+   - "API key invalid" → 认证问题，更换提供商
+   - "timeout" → 超时，重试或换工具
+2. 尝试替代工具：web_search失败→web_fetch→agent-browser
+3. 查阅诊断知识：`memory/learning/knowledge/knowledge-network-tools-diagnosis.md`
+
+**快速修复**：
+```bash
+# 检查配置
+openclaw config get tools.web.search
+openclaw config get env | grep PROXY
+
+# 重启Gateway
+openclaw gateway restart
+```
 
 ### 技能优先原则
 遇到问题时，先检查是否有相关技能：
