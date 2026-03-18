@@ -22,7 +22,18 @@
 - 为什么有价值：1-2句话
 - 存到：`memory/learning-log.md`
 
-### 3. 待办任务
+### 3. 邮件检查
+- 执行邮件检查：`cd ~/.openclaw/workspace/skills/imap-smtp-email && node scripts/imap.js check --limit 10`
+- 识别重要邮件（关键词：面试、简历、笔试、interview、resume）
+- 如果有重要邮件，主动报告给泽钢
+
+**报告格式**：
+```
+📧 发现重要邮件：
+- [主题] 来自 [发件人]
+```
+
+### 4. 待办任务
 - 读取 `memory/projects.md`
 - **展示所有 `[ ]` 未完成的任务列表**
 - 尝试完成其中一个简单任务
@@ -36,7 +47,7 @@
 - [ ] 任务3
 ```
 
-### 4. 更新记录
+### 5. 更新记录
 **追加到 `memory/daily/YYYY-MM-DD.md`**：
 - 时间：HH:MM 心跳
 - 系统状态：Gateway状态、错误（仅在有异常时记录）
