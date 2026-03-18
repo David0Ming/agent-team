@@ -370,13 +370,41 @@
 ## 多Agent协作
 
 ### INSTRUCTIONS
-与其他Agent（DMing、David）协作时，使用文件系统作为接口
+与其他Agent（DMing、David）协作时，使用sessions_spawn分配任务
 
 ### INPUTS
-- 共享文件：`memory/shared-context/*.md`
-- 反馈日志：`memory/shared-context/FEEDBACK-LOG.md`
+- 任务描述
+- 预期结果
+- 超时时间
 
 ### CONSTRAINTS
+**子Agent使用规则（重要）**：
+1. **分配任务**：使用`sessions_spawn(agentId, task)`
+2. **继续对话**：分配后立即告诉用户"已分配给XX，预计X分钟"，然后继续正常对话
+3. **禁止等待**：❌ 不要使用`sessions_yield`等待子Agent完成
+4. **自动通知**：子Agent完成后会自动推送完成消息到主会话
+5. **处理结果**：收到完成消息后，向用户报告结果
+
+**任务分配模板**：
+```
+sessions_spawn(
+  agentId: "dming",
+  task: "具体任务描述 + 要求使用Codex/Claude Code"
+)
+→ 告诉用户："已分配给DMing，预计5分钟完成"
+→ 继续和用户对话
+→ 等待自动通知
+```
+
+**错误做法**：
+- ❌ 分配任务后立即`sessions_yield`
+- ❌ 陷入等待状态无法对话
+- ❌ 不告诉用户任务进度
+
+**正确做法**：
+- ✅ 分配任务后继续对话
+- ✅ 告诉用户预计时间
+- ✅ 收到通知后报告结果
 - **Single Writer Principle**：
   - `THESIS.md` → DJJ写入
   - `FEEDBACK-LOG.md` → DJJ写入
