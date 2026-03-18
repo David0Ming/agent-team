@@ -1,6 +1,10 @@
 ---
 name: product-manager-toolkit
-description: "Comprehensive toolkit for product managers including RICE prioritization, customer interview analysis, PRD templates, discovery frameworks, and go-to-market strategies. Use for feature prioritizati..."
+version: 1.0.0
+author: Community
+compatibility: openclaw >= 2026.2.0
+description: "Comprehensive toolkit for product managers including RICE prioritization, customer interview analysis, PRD templates, discovery frameworks, and go-to-market strategies. Use for feature prioritization, user research, roadmap planning, and product launches."
+tags: [product-management, prioritization, strategy]
 risk: unknown
 source: community
 date_added: "2026-02-27"

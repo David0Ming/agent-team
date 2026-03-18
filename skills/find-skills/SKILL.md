@@ -1,7 +1,10 @@
 ---
 name: find-skills
-skill_version: 1.0.0
+version: 1.0.0
+author: Community
+compatibility: openclaw >= 2026.2.0
 description: Discover and install skills from the open agent skills ecosystem using npx skills CLI. Helps find skills for React, testing, deployment, documentation, and more.
+tags: [discovery, installation, ecosystem]
 ---
 
 # find-skills

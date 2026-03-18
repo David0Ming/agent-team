@@ -1,7 +1,10 @@
 ---
 name: agent-browser
-skill_version: 1.0.0
+version: 1.0.0
+author: Vercel Labs
+compatibility: openclaw >= 2026.2.0
 description: Browser automation for AI agents. Navigate, snapshot, interact with web pages using CLI commands. Supports authentication, session persistence, screenshots, PDF generation, mobile testing, and security features.
+tags: [browser, automation, web-scraping]
 ---
 
 # agent-browser
