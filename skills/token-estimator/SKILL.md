@@ -1,6 +1,10 @@
 ---
 name: token-estimator
+version: 1.0.0
+author: DJJ
+compatibility: openclaw >= 2026.2.0
 description: "Estimate task token cost before execution and recommend optimal model selection. Use when: (1) starting coding tasks on large codebases, (2) need to decide between cost-effective vs high-performance models, (3) processing large files or batch operations. Analyzes file sizes, character counts, and task complexity to recommend model tier (lightweight/standard/premium)."
+tags: [optimization, cost-management, model-selection]
 ---
 
 # Token Estimator
