@@ -1,0 +1,46 @@
+{
+  "agents": {
+    "defaults": {
+      "model": {
+        "primary": "anthropic/claude-sonnet-4-5",
+        "fallbacks": []
+      },
+      "workspace": "/home/user/.openclaw/workspace",
+      "contextPruning": {
+        "mode": "cache-ttl",
+        "ttl": "1h"
+      },
+      "compaction": {
+        "mode": "safeguard",
+        "reserveTokensFloor": 40000,
+        "memoryFlush": {
+          "enabled": true,
+          "softThresholdTokens": 4000,
+          "systemPrompt": "会话即将压缩，保存重要记忆",
+          "prompt": "将重要内容写入memory/daily/YYYY-MM-DD.md；如无需保存回复NO_REPLY"
+        }
+      },
+      "heartbeat": {
+        "every": "30m"
+      }
+    }
+  },
+  "plugins": {
+    "slots": {
+      "memory": "memory-lancedb-pro"
+    },
+    "entries": {
+      "memory-lancedb-pro": {
+        "enabled": true,
+        "config": {
+          "embedding": {
+            "apiKey": "YOUR_JINA_API_KEY",
+            "model": "jina-embeddings-v5-text-small",
+            "baseURL": "https://api.jina.ai/v1",
+            "dimensions": 1024
+          }
+        }
+      }
+    }
+  }
+}
