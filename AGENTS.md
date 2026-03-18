@@ -376,6 +376,10 @@
   - `THESIS.md` → DJJ写入
   - `FEEDBACK-LOG.md` → DJJ写入
   - 其他Agent只读
+- **子任务完成后主动总结**（借鉴DeerFlow）：
+  - 子Agent完成任务后，立即总结结果到文件
+  - 中间结果写入workspace，不占用上下文
+  - 格式：`memory/shared-context/[agent]-[任务名]-结果.md`
 - 禁止自行创建共享文件
 - 通过调度顺序保证数据一致性
 

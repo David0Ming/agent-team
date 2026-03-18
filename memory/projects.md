@@ -8,28 +8,26 @@
 
 > 具体的、有完成标准的短期任务
 
-### 产品工作
+### 个人项目
 
-- [ ] **P1: Shannon安全测试项目** (RICE: TBD)
-  - 使用Shannon AI渗透测试工具测试嘟嘟巴士主营产品安全性
-  - **状态**：暂缓（等待信息补充）
-  - **负责人**：DMing（技术）、Dtester（测试）
-  - **待办**：
-    - [ ] 确认测试目标系统（用户端/后端API/管理后台）
-    - [ ] 获取源代码仓库访问权限
-    - [ ] 评估测试环境状态（Staging/Dev）
-    - [ ] 申请Anthropic API Key
-  - **文档**：`projects/shannon-security-test/`
-
-- [ ] **P2: 飞书机器人上传文件权限+竞品可视化** (RICE: 10.0)
-  - 配置飞书应用权限，上传文件能力
-  - 把竞品信息设置成可视化图表并上传
-  - 影响：50个团队成员 | 工作量：Large
-  - **状态**：已暂缓（优先级不高）
-
-- [ ] **P3: 给OpenClaw连接Discord** (RICE: 4.0)
+- [ ] **P1: 给OpenClaw连接Discord** (RICE: 4.0)
   - 配置Discord频道，让OpenClaw可以发送消息
   - 影响：10个潜在用户 | 工作量：Medium
+
+### 系统优化（借鉴DeerFlow）
+
+- [x] **强化"子任务完成后主动总结"规则** ✅ 已完成
+  - 已在AGENTS.md添加子任务完成后的总结机制
+  - 中间结果写入workspace，不占用上下文
+  
+- [x] **验证子Agent上下文隔离** ✅ 已完成
+  - 已验证：物理隔离 + 配置隔离 + 记忆隔离
+  - 结论：我们的实现已优于DeerFlow，无需改进
+  
+- [x] **考虑嵌入式客户端模式** ✅ 已研究
+  - 短期方案：HTTP客户端封装
+  - 长期方案：推动官方Python SDK
+  - 当前优先级：低（标记为长期待办）
 
 ### 个人学习
 
@@ -62,26 +60,6 @@
 
 > 没有结束日期的持续责任
 
-### 产品工作
-- **嘟嘟巴士先锋引擎**：每日09:00自动生成10条视频prompt
-  - 项目路径：`projects/dudubashi-pioneer/`
-  - 工作流程：参考 `projects/dudubashi-pioneer/WORKFLOW.md`
-  
-- **海野山房酒店视频**：每日13:40自动生成5条视频prompt
-  - 项目路径：`projects/haiye-hotel/`
-  
-- **竞品监控**：持续跟踪竞品动态
-  - 项目路径：`projects/dudubashi-pioneer/`
-  - 工作流程：参考 `projects/dudubashi-pioneer/WORKFLOW.md`
-  - 执行命令：
-    ```bash
-    cd projects/dudubashi-pioneer
-    python3 scripts/fetch_newrank_auto.py
-    python3 scripts/generate_competitor_report.py
-    ```
-  - 配置文件：`projects/dudubashi-pioneer/config/newrank.json`
-  - 输出位置：`projects/dudubashi-pioneer/competitor-data/YYYY-MM-DD/`
-
 ### Agent系统
 - **Agent团队管理**：DJJ、DMing、David及子团队协作
 - **系统维护**：OpenClaw配置、心跳监控、日志管理
@@ -109,6 +87,12 @@
 > 已完成或不再活跃的项目
 
 ### 2026-03
+
+- [x] **嘟嘟巴士实习项目** (2026-03-15 结束)
+  - 先锋引擎：每日自动生成视频prompt
+  - 海野山房：酒店视频内容生成
+  - 竞品监控：持续跟踪竞品动态
+  - 项目文件保留在：`projects/dudubashi-pioneer/`, `projects/haiye-hotel/`
 
 - [x] **P0: 嘟嘟巴士prompt生成质量优化** (2026-03-07)
   - 质量从6.5/10提升到8.5/10
