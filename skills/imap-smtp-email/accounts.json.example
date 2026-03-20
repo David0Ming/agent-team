@@ -1,0 +1,22 @@
+{
+  "accounts": [
+    {
+      "name": "qq-main",
+      "imap": {
+        "host": "imap.qq.com",
+        "port": 993,
+        "user": "your@qq.com",
+        "pass": "your_password",
+        "tls": true
+      },
+      "smtp": {
+        "host": "smtp.qq.com",
+        "port": 587,
+        "secure": false,
+        "user": "your@qq.com",
+        "pass": "your_password",
+        "from": "your@qq.com"
+      }
+    }
+  ]
+}

@@ -1,7 +1,12 @@
 # 技能索引 - 按功能分类
 
 > 💡 **使用说明**：遇到相关任务时，查阅对应技能
-> 📊 **当前技能数量**：8个
+> 📊 **当前技能数量**：25+个
+> 📁 **技能位置**：
+> - 工作区：`~/.openclaw/workspace/skills/`（10个）
+> - 全局：`~/.openclaw/skills/`（8个）
+> - 飞书扩展：`~/.openclaw/extensions/feishu/skills/`（7个）
+> 🔍 **检查已安装**：`ls ~/.openclaw/workspace/skills/ ~/.openclaw/skills/ ~/.openclaw/extensions/feishu/skills/`
 
 ## 🌐 浏览器自动化
 
@@ -13,10 +18,14 @@
 
 **何时使用**：需要搜索信息、研究主题时
 
+**工作区**（`~/.openclaw/workspace/skills/`）：
 - `find-skills` - 发现和安装新技能
 - `last30days` - 最近30天Reddit+X+Web综合研究
 - `tavily-search` - Tavily搜索API
 - `tavily-ai-skills` - Tavily AI技能集
+
+**全局**（`~/.openclaw/skills/`）：
+- `web-scraping` - 网页抓取（反爬虫、内容提取）
 
 ## 📊 产品管理
 
@@ -34,7 +43,30 @@
 
 **何时使用**：开发、优化时
 
+**工作区技能**：
 - `token-estimator` - Token使用量估算和模型选择
+- `ai-voice-cloning` - AI语音克隆
+- `videoagent-video-studio` - 视频制作
+
+**全局技能**：
+- `git-commit` - Git提交（conventional commit）
+- `systematic-debugging` - 系统化调试
+- `test-driven-development` - TDD测试驱动开发
+- `receiving-code-review` - 接收代码审查
+- `requesting-code-review` - 请求代码审查
+- `webapp-testing` - Web应用测试
+
+## 📱 飞书集成
+
+**何时使用**：飞书操作时
+
+- `feishu-chat` - 飞书聊天
+- `feishu-doc` - 飞书文档
+- `feishu-drive` - 飞书云盘
+- `feishu-perm` - 飞书权限
+- `feishu-task` - 飞书任务
+- `feishu-urgent` - 飞书紧急消息
+- `feishu-wiki` - 飞书知识库
 
 ---
 

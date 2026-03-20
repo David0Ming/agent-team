@@ -1,0 +1,33 @@
+{
+  "version": "1.0",
+  "description": "OpenClaw更新后需要修复的项目配置",
+  "fixes": [
+    {
+      "name": "microphone-permission",
+      "description": "修复麦克风权限（允许Web Speech API）",
+      "enabled": true,
+      "priority": 1,
+      "type": "script",
+      "script": "fix-microphone.sh",
+      "verify": "grep 'microphone=(self)' /home/mzg/.npm-global/lib/node_modules/openclaw/dist/gateway-cli-*.js"
+    },
+    {
+      "name": "voice-call-plugin",
+      "description": "确保voice-call插件启用",
+      "enabled": true,
+      "priority": 2,
+      "type": "command",
+      "command": "openclaw plugins enable voice-call",
+      "verify": "openclaw plugins list | grep 'voice-call.*loaded'"
+    }
+  ],
+  "codex_tasks": [
+    {
+      "name": "complex-fixes",
+      "description": "需要Codex处理的复杂修复任务",
+      "enabled": false,
+      "trigger": "manual",
+      "prompt": "检查OpenClaw更新后是否有配置文件格式变化，如有则自动迁移"
+    }
+  ]
+}
