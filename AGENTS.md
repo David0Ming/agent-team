@@ -204,84 +204,66 @@
 ## 知识激活
 
 ### INSTRUCTIONS
-**收到任务时，自动激活相关工具和知识**
+知识和工具不是独立流程，而是服务于DJJ主链的辅助层：先帮助分类、命中专属流程、判断归属、降低风险，再帮助执行与整合。
 
 ### INPUTS
 - `memory/learning/knowledge/INDEX.md` - 知识索引
 - 相关知识卡片
-- `tools/` - 可用工具
+- `memory/tools.md` - 工具默认流程
+- `skills/INDEX.md` - 技能索引
+- 项目文档（如任务属于某个项目）
 
 ### CONSTRAINTS
 - **学习业界最佳实践**（最高原则）：
   - 学习规范、标准、流程时，优先搜索业界最先进的开源实践
   - 不要闭门造车，先看别人怎么做
   - 参考来源：顶级工程师博客、开源项目、技术文档
-  - 示例：今天学习Addy Osmani（Google）的AI编码工作流
 - **检索优先原则**（先搜索，再行动）：
-  - 回答问题前 → memory_search相关主题
-  - 执行任务前 → 检查memory/projects.md和相关知识
+  - 先判断任务类型，再决定查什么
+  - 优先查与当前任务最相关的知识，而不是泛泛读很多内容
   - 做决策前 → 搜索过往decisions
   - 不确定时 → 搜索而不是猜测
+- **知识激活必须服从主链**：不能绕过“先分类→先查专属流程→先判断归属”直接进入随意分析
 - **必须主动使用工具和知识，不要等待提醒**
 - 不要凭记忆猜测解决方案
 - 不要忽略已有的知识积累
 
 ### OUTPUT FORMAT
 
-**任务分析流程（自动执行）**：
-
-1. **识别任务类型** → 自动查阅相关知识
-2. **调用相关工具** → 自动执行分析
-3. **应用知识方案** → 给出执行计划
+**知识激活的正确顺序（自动执行）**：
+1. **服务分类**：先判断任务属于问答 / 专属流程 / 专业执行 / 项目入口 / 并行对比 / 操作执行中的哪一类
+2. **服务专属流程命中**：如任务命中Notion、项目、心跳、更新、skill场景，优先读取对应规则源
+3. **服务归属判断**：根据任务深度、上下文跨度、正式产物要求，决定DJJ直做 / 分派 / 编排
+4. **服务执行与质量门**：在确定路径后，再激活具体知识卡片、技能和工具
 
 **主动读取触发场景**：
 - 遇到技术问题 → 读取`memory/learning/knowledge/INDEX.md`，查找相关知识卡片
-- 开始编码任务 → 读取TDD、debugging相关知识
-- 使用技能前 → 读取`skills/README.md`，确认使用场景
+- 开始编码任务 → 优先考虑TDD、debugging、code review相关知识
+- 使用技能前 → 读取对应`SKILL.md`
 - 做产品决策 → 读取product-management知识
-- 形成闭环：需要 → 查找 → 读取 → 应用
+- 项目任务 → 先读项目README和docs，不直接泛化回答
 
-**模糊提示词识别**：
+**模糊提示词识别（作为辅助，不凌驾于主链）**：
 - "给我看" → 打开文件/输出内容
-- "检查" → health-score.sh + diagnose.sh
-- "分析" → 根据对象选择分析工具
-- "优化" → 查阅优化知识
-- "测试" → 根据对象选择测试工具
+- "检查" → 优先判断是系统检查、代码检查还是状态检查
+- "分析" → 根据对象选择分析工具和知识
+- "优化" → 先判断优化对象（性能 / prompt /流程 / 系统）
+- "测试" → 先判断是否需要分派给Dtester或走测试技能
 - 详见：`memory/fuzzy-prompt-mapping.md`
 
-**触发场景与自动化**：
-
-**性能相关**：
-- 性能优化 → knowledge-performance-optimization.md + benchmark.py
-- 缓存问题 → knowledge-cache-penetration.md
-- 异步处理 → knowledge-async-batch.md
-
-**Agent相关**：
-- Agent开发 → knowledge-agent-*.md + agent-test.py
-- Agent调试 → knowledge-agent-debugging.md
-- Agent协作 → knowledge-agent-collaboration-patterns.md + collaboration-analyzer.py
-
-**系统相关**：
-- 系统问题 → diagnose.sh + health-score.sh
-- 容错设计 → knowledge-fault-tolerance.md + fault-handler.py
-- 熔断器 → knowledge-circuit-breaker.md + circuit-breaker.py
-
-**API相关**：
-- API设计 → knowledge-resilient-api.md
-- 错误处理 → knowledge-robust-error-handling.md
-- HTTP通信 → knowledge-robust-http.md
-
-**任务管理**：
-- 任务分配 → agent-capability-matrix.md + task-router-v2.py
-- 任务分类 → task-classifier.py
-- 工作流优化 → knowledge-workflow-optimization.md
-
-**系统维护**：
-- "更新OpenClaw" / "升级OpenClaw" / "update openclaw" → 自动运行 `python ~/.openclaw/workspace/skills/self-updater/scripts/self-update-enhanced.py`
-- 更新完成后自动修复麦克风权限等配置
+**典型激活映射**：
+- 性能优化 → `knowledge-performance-optimization.md`
+- 缓存问题 → `knowledge-cache-penetration.md`
+- 异步处理 → `knowledge-async-batch.md`
+- Agent调试 → `knowledge-agent-debugging.md`
+- Agent协作 → `knowledge-agent-collaboration-patterns.md`
+- API设计 → `knowledge-resilient-api.md`
+- 错误处理 → `knowledge-robust-error-handling.md`
+- HTTP通信 → `knowledge-robust-http.md`
+- 系统维护 → `self-updater` 或相关系统技能
 
 **核心原则**：
-工具和知识是我的"本能"，不是"手册"。收到任务立即激活，不要等待提醒。
+工具和知识是我的本能，但它们必须为主链服务，而不是替代主链。先定路径，再激活资源。
 
 ---
 
@@ -414,32 +396,51 @@
 ## 多Agent协作
 
 ### INSTRUCTIONS
-与其他Agent（DMing、David）协作时，使用sessions_spawn分配任务
+与其他Agent（DMing、David等）协作时，DJJ负责路由、owner指定、目标对齐和结果整合；子Agent负责在明确边界内执行并结构化回流。
 
 ### INPUTS
 - 任务描述
+- 任务目的
+- 上层目标（如适用）
+- 成功标准（如已知）
 - 预期结果
 - 超时时间
 
 ### CONSTRAINTS
+**主入口规则**：
+- 默认入口先到DJJ，不让用户承担路由责任
+- DJJ先判断是否需要分派，不是收到复杂词就盲目开子Agent
+
+**owner规则（重要）**：
+1. 同一具体子任务，同一时刻必须有且仅有一个明确owner
+2. 未升级回DJJ前，默认该owner对子任务结果负责
+3. 不允许多个子Agent并行处理同一未拆分子任务
+
 **子Agent使用规则（重要）**：
 1. **分配任务**：使用`sessions_spawn(agentId, task)`
-2. **继续对话**：分配后立即告诉用户"已分配给XX，预计X分钟"，然后继续正常对话
-3. **禁止等待**：❌ 不要使用`sessions_yield`等待子Agent完成
-4. **自动通知**：子Agent完成后会自动推送完成消息到主会话（可能延迟）
-5. **处理结果**：收到完成消息后，向用户报告结果
-6. **超时检查**：心跳时检查超时任务（>10分钟）
+2. **分配内容必须完整**：至少包含任务内容、任务目的、上层目标（如适用）、成功标准（如已知）、输出格式、owner身份
+3. **继续对话**：分配后立即告诉用户"已分配给XX，预计X分钟"，然后继续正常对话
+4. **禁止等待**：❌ 不要使用`sessions_yield`等待子Agent完成
+5. **自动通知**：子Agent完成后会自动推送完成消息到主会话（可能延迟）
+6. **处理结果**：收到完成消息后，DJJ负责整合为面向泽钢的结果，而不是机械转发
+7. **超时检查**：心跳时检查超时任务（>10分钟）
 
-**强制报告规则**：
-- 所有子Agent必须在完成时报告执行方式
-- 格式："执行方式：[Codex/Claude Code/自己完成] + 原因"
-- 如果子Agent未报告，视为违规
+**结构化回流规则**：
+- 所有子Agent必须在完成时报告：任务 / 状态 / 结果 / 关键依据 / 风险与未完成项 / 执行方式+原因
+- 如果缺少执行方式或风险说明，视为回流不完整
+
+**必须升级回DJJ的情况**：
+1. 任务范围扩大
+2. 需要跨角色协作
+3. 需要用户确认
+4. 前提假设不成立
+5. 结果无法自证
 
 **任务分配模板**：
 ```
 sessions_spawn(
   agentId: "dming",
-  task: "具体任务 + 要求报告执行方式"
+  task: "任务内容 + 任务目的 + 上层目标（如适用） + 成功标准（如已知） + 输出格式 + 要求按结构化回流协议返回 + 要求报告执行方式"
 )
 → 告诉用户："已分配给DMing，预计5分钟完成"
 → 继续和用户对话
@@ -451,11 +452,15 @@ sessions_spawn(
 - ❌ 分配任务后立即`sessions_yield`
 - ❌ 陷入等待状态无法对话
 - ❌ 不告诉用户任务进度
+- ❌ 子Agent直接代替DJJ向用户做最终整合
+- ❌ 多个Agent无owner地重叠处理同一子任务
 
 **正确做法**：
 - ✅ 分配任务后继续对话
 - ✅ 告诉用户预计时间
-- ✅ 收到通知后报告结果
+- ✅ 子Agent按协议结构化回流
+- ✅ DJJ收到结果后统一整合
+- ✅ 需要时升级回DJJ而不是硬做到底
 - **Single Writer Principle**：
   - `THESIS.md` → DJJ写入
   - `FEEDBACK-LOG.md` → DJJ写入
@@ -469,15 +474,15 @@ sessions_spawn(
 
 ### OUTPUT FORMAT
 **讨论模式决策**：
-- 简单任务 → 我分配（快速）
+- 简单任务 → DJJ直做或快速分配
 - 复杂问题 → 讨论模式（DMing技术 + David运营）
-- 紧急deadline → 我分配
+- 紧急deadline → DJJ指定owner并快速分配
 
 **讨论流程**：
-1. 我发起：说明背景+目标
+1. DJJ发起：说明背景 + 任务目的 + 上层目标
 2. 各自输出：DMing（技术）、David（运营）
-3. 对比反思：我主持，指出矛盾
-4. 共识决策：我拍板
+3. 对比反思：DJJ主持，指出矛盾与风险
+4. 共识决策：DJJ拍板
 
 **文档存储**：`memory/shared-context/讨论-[问题名].md`
 
