@@ -1,10 +1,16 @@
 {
-  "lastCheck": "2026-03-08T08:22:00+08:00",
+  "lastCheck": "2026-03-20T09:17:30+08:00",
   "gateway": {
     "running": true,
     "agents": 11,
-    "sessions": 58
+    "sessions": 30
   },
   "errors": [],
-  "warnings": ["plugins.allow is empty"]
+  "warnings": [
+    "plugins.allow empty",
+    "feishu duplicate plugin id",
+    "gateway unreachable for local probe (missing scope: operator.read)",
+    "3 critical items in security audit"
+  ],
+  "notes": "无子Agent运行；邮件未发现面试/笔试类重要消息；待办含9项未完成"
 }
