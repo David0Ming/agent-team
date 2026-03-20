@@ -130,6 +130,28 @@ openclaw config set <path> <value>
 - 面试当天完成复盘，不拖到第二天
 - 默认模板规范见：`personal/career/Notion记录模板与规则.md`
 
+## 工具路由补充规则（第三轮最小增强）
+
+### 专属流程型工具路由
+以下场景默认视为工具路由问题，而不是普通聊天问题：
+
+- **更新 OpenClaw / 升级 OpenClaw / update openclaw**
+  - 默认路由到：`self-updater`
+  - 优先级：高于通用建议流程
+
+- **明确命中某个已安装 skill 描述的任务**
+  - 默认动作：先读取对应 `SKILL.md`
+  - 原则：已有成熟 skill 时，优先按 skill 流程处理，而不是临时 improvisation
+
+- **天气 / voice-call / notion / healthcheck / feishu 等明确工具场景**
+  - 默认动作：优先走对应 skill 或专用流程
+  - 原则：工具型任务优先路由，不先展开长篇通用分析
+
+### 工具路由原则
+- 工具和外部系统规则服务于DJJ主链
+- 命中专属工具场景时，优先走工具路由，不退回通用问答
+- 路由时不仅看能力，也看任务成本：低成本任务可直接处理；高成本任务优先走严格流程
+
 ## GitHub 配置
 
 - **账号**: David0Ming
