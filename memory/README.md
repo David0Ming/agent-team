@@ -292,7 +292,9 @@
 - 典型错位样本已确认：
   - `algorithm-learning-2026-03-18.md`：本质是学习记录，正确应进 `memory/learning/algorithms/`
   - `subagent-isolation-verification.md`：本质是验证/研究结论，正确应进 `memory/learning/verification/`
-  - `2026-03-14.md`、`2026-03-15-graduation-timeline.md`、`2026-03-16-status-update.md`、`2026-03-20-heartbeat-alert.md`：本质是历史阶段记录，正确应归 `memory/archive/2026-03/`
+  - `embedded-client-research.md`：本质是研究专题，正确应进 `memory/learning/research/`
+  - `2026-03-14.md`、`2026-03-15-graduation-timeline.md`、`2026-03-16-status-update.md`、`2026-03-20-heartbeat-alert.md`、`2026-03-15.md`、`2026-03-16.md`、`2026-03-17.md`、`2026-03-20.md`、`2026-03-22.md`、`2026-03-22-model-fix.md`：本质是历史阶段记录，正确应归 `memory/archive/2026-03/`
+  - `free-models.log`：本质是运行日志，正确应进 `memory/archive/logs/`
 
 ### 为什么会写错地方
 
