@@ -45,6 +45,34 @@ openclaw config get <path>
 openclaw config set <path> <value>
 ```
 
+## 网络搜索与代理
+
+### OpenClaw 代理配置（2026-03-15）
+当 `web_search` / `web_fetch` 出现 `fetch failed` 时，优先检查 OpenClaw 自己的环境变量，而不是只看系统代理。
+
+```bash
+openclaw config set env.HTTP_PROXY "http://127.0.0.1:7890"
+openclaw config set env.HTTPS_PROXY "http://127.0.0.1:7890"
+openclaw gateway restart
+```
+
+**诊断信号**：
+- `fetch failed` → 多半是网络/代理
+- `API key invalid` → 说明网络已通，转到认证问题
+
+### 搜索提供商选择（2026-03-15）
+- **Brave**：默认首选，稳定性最好
+- **Gemini**：适合 AI 合成回答，但更依赖网络环境
+- **Kimi / Perplexity**：作为备用，不先当唯一主方案
+
+**原则**：至少准备 1 个主提供商 + 1 个备用方案。
+
+### Python 包安装边界（2026-03-15）
+遇到 `externally-managed-environment`：
+- 优先 `python3 -m venv ...`
+- CLI 工具优先 `pipx`
+- 不使用 `--break-system-packages`
+
 ## 插件
 
 ### memory-lancedb-pro
