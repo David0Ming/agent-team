@@ -289,6 +289,10 @@
 - 顶层有一批“按日期命名但不在 daily/ 的文件”
 - 一些项目/研究型文件混在 `memory/` 顶层
 - `README.md` 之前更像旧索引，不像真正的职责地图
+- 典型错位样本已确认：
+  - `algorithm-learning-2026-03-18.md`：本质是学习记录，正确应进 `memory/learning/algorithms/`
+  - `subagent-isolation-verification.md`：本质是验证/研究结论，正确应进 `memory/learning/verification/`
+  - `2026-03-14.md`、`2026-03-15-graduation-timeline.md`、`2026-03-16-status-update.md`、`2026-03-20-heartbeat-alert.md`：本质是历史阶段记录，正确应归 `memory/archive/2026-03/`
 
 ### 为什么会写错地方
 
