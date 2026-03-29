@@ -1,0 +1,12 @@
+{
+  "generatedAt": "today",
+  "phase": "graduation-and-job-hunt",
+  "topPriorities": [
+    "完善招银简历"
+  ],
+  "urgentItems": [],
+  "learningBudget": 30,
+  "learningBias": "balanced",
+  "blockedItems": [],
+  "rationale": "优先基于真实未完成任务与学习摘要生成最小规划摘要。"
+}
