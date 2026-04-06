@@ -1,0 +1,13 @@
+{
+  "profiles": {
+    "main": {
+      "defaultUserId": "zegang"
+    },
+    "feishu2": {
+      "defaultUserId": "dengjingjing"
+    }
+  },
+  "feishuUsers": {
+    "ou_de9556d66bdbf5d880c1ee93dd54e557": "zegang"
+  }
+}

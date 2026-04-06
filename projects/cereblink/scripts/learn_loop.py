@@ -4,6 +4,7 @@ from projects.cereblink.scripts.generate_learning_summary import generate_learni
 from projects.cereblink.scripts.paths import resolve_user_root
 from projects.cereblink.scripts.generate_today import generate_today_plan
 from projects.cereblink.scripts.review_scheduler import enqueue_review, next_review_days
+from projects.cereblink.scripts.user_routing import resolve_active_user_id
 from projects.cereblink.scripts.study_session import (
     assess_mastery,
     assessment_reason,
@@ -21,7 +22,17 @@ def process_learning_answer(
     learning_goal: str,
     answer: str,
     user_id: str | None = None,
+    profile: str | None = None,
+    feishu_open_id: str | None = None,
+    routing_config_path: Path | None = None,
 ) -> dict:
+    if user_id is None and routing_config_path is not None:
+        user_id = resolve_active_user_id(
+            routing_config_path,
+            profile=profile,
+            feishu_open_id=feishu_open_id,
+        )
+
     target_root = resolve_user_root(root, user_id)
     status = assess_mastery(answer)
     reason = assessment_reason(answer, status)

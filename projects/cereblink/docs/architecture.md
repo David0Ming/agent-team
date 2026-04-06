@@ -40,3 +40,10 @@ For new topics, external search is part of lesson preparation when the topic ben
 - `users/<userId>/progress/` — mastery tracking state
 - `users/<userId>/plans/` — generated study plans
 - `users/<userId>/state/` — generated summaries and planning state
+
+### Entry routing
+- `state/user-routing.json` defines how entry context maps to a CerebLink user
+- Priority: `feishu_open_id` exact match > profile default
+- Current defaults:
+  - `main` -> `zegang`
+  - `feishu2` -> `dengjingjing`

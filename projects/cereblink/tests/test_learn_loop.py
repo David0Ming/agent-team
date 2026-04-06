@@ -29,6 +29,7 @@ def test_process_learning_answer_updates_full_learning_loop(tmp_path):
     assert result["status"] == "mastered"
     assert mastery["concepts"]["reranker"]["status"] == "mastered"
     assert queue["items"][0]["slug"] == "reranker"
+    assert "status" not in queue["items"][0]
     assert "# Today Plan" in today
     assert "`reranker` · mastered" in today
     assert "原因：" in today
@@ -51,3 +52,35 @@ def test_process_learning_answer_generates_learning_summary(tmp_path: Path):
     assert summary.exists()
     data = json.loads(summary.read_text(encoding="utf-8"))
     assert "topicStates" in data
+
+
+def test_process_learning_answer_uses_profile_default_user_routing(tmp_path: Path):
+    root = tmp_path / "cereblink"
+    user_root = root / "users" / "dengjingjing"
+    for rel in ["progress", "reviews", "plans", "sessions", "state"]:
+        (user_root / rel).mkdir(parents=True, exist_ok=True)
+    (user_root / "progress" / "mastery-tracker.json").write_text('{"concepts": {}}', encoding="utf-8")
+    (user_root / "reviews" / "review-queue.json").write_text('{"items": []}', encoding="utf-8")
+
+    routing = root / "state" / "user-routing.json"
+    routing.parent.mkdir(parents=True, exist_ok=True)
+    routing.write_text(json.dumps({
+        "profiles": {"feishu2": {"defaultUserId": "dengjingjing"}},
+        "feishuUsers": {}
+    }, ensure_ascii=False, indent=2), encoding="utf-8")
+
+    process_learning_answer(
+        root,
+        "clinical-pharmacology",
+        "clinical/pharma",
+        "临床药理学",
+        "理解药代动力学基础",
+        "这是一个方向正确但不完整的回答",
+        profile="feishu2",
+        routing_config_path=routing,
+    )
+
+    summary = user_root / "state" / "learning-summary.json"
+    assert summary.exists()
+    mastery = json.loads((user_root / "progress" / "mastery-tracker.json").read_text(encoding="utf-8"))
+    assert "clinical-pharmacology" in mastery["concepts"]
