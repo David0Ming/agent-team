@@ -13,22 +13,30 @@ For new topics, external search is part of lesson preparation when the topic ben
 
 ## Data Flow
 1. User starts a study session via webchat
-2. System selects New Learning or Review mode
-3. In New Learning, the system performs standard search when needed and synthesizes a short structured explanation
-4. In Review, the system asks first and diagnoses the learner answer before correcting
-5. Session record persisted to `sessions/`
-6. Mastery tracker updated in `progress/mastery-tracker.json`
-7. Review queue updated in `reviews/review-queue.json`
-8. Today plan regenerated in `plans/today.md`
+2. System resolves the active `userId`
+3. System selects New Learning or Review mode
+4. In New Learning, the system performs standard search when needed and synthesizes a short structured explanation
+5. In Review, the system asks first and diagnoses the learner answer before correcting
+6. Session record persisted to `users/<userId>/sessions/`
+7. Mastery tracker updated in `users/<userId>/progress/mastery-tracker.json`
+8. Review queue updated in `users/<userId>/reviews/review-queue.json`
+9. Today plan regenerated in `users/<userId>/plans/today.md`
+10. Learning summary regenerated in `users/<userId>/state/learning-summary.json`
 
 ## File Layout
-- `knowledge/` — concept cards (Obsidian-compatible Markdown)
-- `questions/` — high-value question cards
-- `topics/` — topic/MOC pages
-- `sessions/` — per-session learning records
-- `reviews/` — review queue and history
-- `progress/` — mastery tracking state
-- `plans/` — generated study plans
-- `templates/` — card and record templates
-- `scripts/` — automation scripts
-- `tests/` — pytest test suite
+### Shared repository-level files
+- `README.md`
+- `docs/`
+- `templates/`
+- `scripts/`
+- `tests/`
+
+### User-isolated data
+- `users/<userId>/knowledge/` — concept cards (Obsidian-compatible Markdown)
+- `users/<userId>/questions/` — high-value question cards
+- `users/<userId>/topics/` — topic/MOC pages
+- `users/<userId>/sessions/` — per-session learning records
+- `users/<userId>/reviews/` — review queue and history
+- `users/<userId>/progress/` — mastery tracking state
+- `users/<userId>/plans/` — generated study plans
+- `users/<userId>/state/` — generated summaries and planning state

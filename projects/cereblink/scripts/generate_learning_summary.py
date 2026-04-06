@@ -1,13 +1,17 @@
 import json
 from datetime import date
 from pathlib import Path
+from projects.cereblink.scripts.paths import resolve_user_root
 from projects.cereblink.scripts.planning_state import derive_planning_state
+from projects.cereblink.scripts.review_queue import normalize_queue_items
 
 
-def generate_learning_summary(root: Path) -> Path:
-    tracker = json.loads((root / "progress" / "mastery-tracker.json").read_text(encoding="utf-8"))
-    queue = json.loads((root / "reviews" / "review-queue.json").read_text(encoding="utf-8"))
-    queue_by_slug = {item["slug"]: item for item in queue.get("items", [])}
+def generate_learning_summary(root: Path, user_id: str | None = None) -> Path:
+    target_root = resolve_user_root(root, user_id)
+    tracker = json.loads((target_root / "progress" / "mastery-tracker.json").read_text(encoding="utf-8"))
+    queue = json.loads((target_root / "reviews" / "review-queue.json").read_text(encoding="utf-8"))
+    normalized_items = normalize_queue_items(queue.get("items", []))
+    queue_by_slug = {item["slug"]: item for item in normalized_items}
     topic_states = {}
     recommended = []
     for slug, concept in tracker.get("concepts", {}).items():
@@ -28,14 +32,14 @@ def generate_learning_summary(root: Path) -> Path:
         "currentTrack": "mixed",
         "recommendedTopics": recommended[:3],
         "topicStates": topic_states,
-        "reviewPressure": "high" if len(queue.get("items", [])) >= 3 else "medium" if queue.get("items") else "low",
+        "reviewPressure": "high" if len(normalized_items) >= 3 else "medium" if normalized_items else "low",
         "recentProgress": "summary generated",
         "todayLearned": [],
         "doNotRepeatToday": [],
         "recommendedDuration": 30,
         "rationale": "优先根据当前学习状态与复习队列给出最小学习摘要。",
     }
-    out = root / "state" / "learning-summary.json"
+    out = target_root / "state" / "learning-summary.json"
     out.parent.mkdir(parents=True, exist_ok=True)
     out.write_text(json.dumps(summary, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
     return out
