@@ -27,6 +27,10 @@ def test_process_learning_answer_updates_full_learning_loop(tmp_path):
     today = (root / "plans" / "today.md").read_text(encoding="utf-8")
 
     assert result["status"] == "mastered"
+    assert result["route"]["actionType"] == "new_learning"
+    assert result["concept_card"] is None
+    assert result["question_card"] is None
+    assert result["topic_page"] is None
     assert mastery["concepts"]["reranker"]["status"] == "mastered"
     assert queue["items"][0]["slug"] == "reranker"
     assert "status" not in queue["items"][0]
@@ -84,3 +88,99 @@ def test_process_learning_answer_uses_profile_default_user_routing(tmp_path: Pat
     assert summary.exists()
     mastery = json.loads((user_root / "progress" / "mastery-tracker.json").read_text(encoding="utf-8"))
     assert "clinical-pharmacology" in mastery["concepts"]
+
+
+def test_process_learning_answer_writes_concept_card_when_route_requests_cardify(tmp_path: Path):
+    root = tmp_path
+    (root / "progress").mkdir()
+    (root / "reviews").mkdir()
+    (root / "plans").mkdir()
+    (root / "sessions").mkdir()
+    (root / "state").mkdir()
+    (root / "progress" / "mastery-tracker.json").write_text('{"concepts": {}}', encoding="utf-8")
+    (root / "reviews" / "review-queue.json").write_text('{"items": []}', encoding="utf-8")
+
+    result = process_learning_answer(
+        root,
+        "learning-router",
+        "workflow",
+        "学习动作路由器",
+        "把这一轮整理成卡片",
+        "路由器负责把已有状态输入统一收束成当前学习动作决策。",
+    )
+
+    assert result["route"]["actionType"] == "cardify"
+    assert result["concept_card"] is not None
+    assert result["question_card"] is not None
+    assert result["topic_page"] is not None
+    card = Path(result["concept_card"])
+    assert card.exists()
+    text = card.read_text(encoding="utf-8")
+    assert "## Real Problem" in text
+    assert "## Industry-Validated Method" in text
+    qcard = Path(result["question_card"])
+    assert qcard.exists()
+    qtext = qcard.read_text(encoding="utf-8")
+    assert "## Question" in qtext
+    assert "## Answer" in qtext
+    tpage = Path(result["topic_page"])
+    assert tpage.exists()
+    ttext = tpage.read_text(encoding="utf-8")
+    assert "## Concepts" in ttext
+    assert "## Questions" in ttext
+
+
+def test_process_learning_answer_planning_update_skips_session_and_mastery_write(tmp_path: Path):
+    root = tmp_path
+    (root / "progress").mkdir()
+    (root / "reviews").mkdir()
+    (root / "plans").mkdir()
+    (root / "sessions").mkdir()
+    (root / "state").mkdir()
+    (root / "progress" / "mastery-tracker.json").write_text('{"concepts": {}}', encoding="utf-8")
+    (root / "reviews" / "review-queue.json").write_text('{"items": []}', encoding="utf-8")
+
+    result = process_learning_answer(
+        root,
+        "plan-anchor",
+        "workflow",
+        "学习计划调整",
+        "帮我安排一下今天学什么",
+        "今天优先继续 OpenClaw 与 CerebLink 主线。",
+    )
+
+    mastery = json.loads((root / "progress" / "mastery-tracker.json").read_text(encoding="utf-8"))
+    assert result["route"]["actionType"] == "planning_update"
+    assert result["status"] == "planning"
+    assert result["session_record"] is None
+    assert result["concept_card"] is None
+    assert result["question_card"] is None
+    assert result["topic_page"] is None
+    assert "plan-anchor" not in mastery["concepts"]
+
+
+def test_process_learning_answer_updates_profile_when_route_requests_profile_update(tmp_path: Path):
+    root = tmp_path
+    (root / "progress").mkdir()
+    (root / "reviews").mkdir()
+    (root / "plans").mkdir()
+    (root / "sessions").mkdir()
+    (root / "state").mkdir()
+    (root / "progress" / "mastery-tracker.json").write_text('{"concepts": {}}', encoding="utf-8")
+    (root / "reviews" / "review-queue.json").write_text('{"items": []}', encoding="utf-8")
+    (root / "state" / "learning-profile.json").write_text('{"userId":"zegang"}', encoding="utf-8")
+
+    result = process_learning_answer(
+        root,
+        "career-mainline",
+        "workflow",
+        "主线调整",
+        "以后按这个来，默认学超级个体和个人助手主线",
+        "后续学习应围绕超级个体与个人助手改造展开。",
+    )
+
+    assert result["route"]["actionType"] == "profile_update"
+    assert result["profile_path"] is not None
+    profile = json.loads(Path(result["profile_path"]).read_text(encoding="utf-8"))
+    assert "超级个体" in profile["longTermGoal"]
+    assert "个人助手" in profile["practiceMainline"]

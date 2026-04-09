@@ -1,6 +1,8 @@
 import json
 from pathlib import Path
 
+from projects.cereblink.scripts.review_queue import normalize_queue_items
+
 
 PRIORITY = {"fragile": 0, "learning": 1, "unlearned": 2, "mastered": 3}
 REASON = {
@@ -29,9 +31,24 @@ def _dedupe_items(items: list[dict]) -> list[dict]:
     return list(best.values())
 
 
-def generate_today_plan(queue_path: Path, out_path: Path) -> None:
+def generate_today_plan(queue_path: Path, out_path: Path, tracker_path: Path | None = None) -> None:
     data = json.loads(queue_path.read_text(encoding="utf-8"))
-    unique_items = _dedupe_items(data.get("items", []))
+    legacy_items = _dedupe_items(data.get("items", []))
+    legacy_status_by_slug = {item["slug"]: item.get("status") for item in legacy_items}
+    queue_items = normalize_queue_items(data.get("items", []))
+    tracker_concepts = {}
+    if tracker_path and tracker_path.exists():
+        tracker = json.loads(tracker_path.read_text(encoding="utf-8"))
+        tracker_concepts = tracker.get("concepts", {})
+
+    rendered_items = []
+    for item in queue_items:
+        slug = item["slug"]
+        tracker_status = tracker_concepts.get(slug, {}).get("status")
+        status = tracker_status or legacy_status_by_slug.get(slug) or "learning"
+        rendered_items.append({"slug": slug, "status": status, "due_at": item.get("due_at")})
+
+    unique_items = _dedupe_items(rendered_items)
     items = sorted(unique_items, key=lambda x: PRIORITY.get(x.get("status"), 9))[:3]
 
     lines = [
